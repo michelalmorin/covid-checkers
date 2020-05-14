@@ -1,6 +1,19 @@
-
+body {
+    display: grid;
+    grid-template-rows: 100px 50px 1fr;
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-areas: 
+        'cabecalho cabecalho cabecalho'
+        'funcionalidades funcionalidades funcionalidades'
+        'div-esquerda feed div-direita '
+    ;
+    min-height: 100vh;
+    background-color: rgb(238, 241, 241);
+   
+}
 
 header {
+    grid-area: cabecalho;
     display: flex;
     box-sizing: border-box;
     border: solid 5px dodgerblue; 
@@ -15,18 +28,6 @@ header {
     align-items: center;
 }
 
-html, body {
-    min-height: 100vh;
-    background-color: rgb(238, 241, 241);
-   
-}
-
-.div-externa {
-    display: grid;
-    grid-template-columns: 15% 70% 15%;
-    min-height: 100%;
-}
-
 div {
     display: flex;
     height: 100%;
@@ -36,13 +37,52 @@ div {
     border: solid 5px dodgerblue 
 }
 
-.div-feed {
+
+
+#barra-funcionalidades {
+    grid-area: funcionalidades;
+    display: flex;
+    justify-content: flex-start;
+}
+/*
+#espaco-b-busca{
+    flex-direction: row;
+    box-sizing: border-box;
+    border: 0px;
+    flex-basis: 198.44px; 
+    height: inherit;
+}
+
+#barra-busca{
+    box-sizing: border-box;
+    border:0px;
+}
+*/
+/* .div-externa {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 15% 70% 15%;
+    grid-template-rows: 60px 500px auto;
+    min-height: 100%;
+} */
+
+
+#div-esquerda {
+    grid-area: div-esquerda
+}
+
+#div-direita {
+    grid-area: div-direita
+}
+
+#feed {
+    grid-area: feed;
     display: flex;
     flex-direction: column;
   
 }
 
-div .noticia {
+#feed .noticia {
     border: solid 5px rgb(78, 76, 76);
     width: 90%;
     height: 200px;
