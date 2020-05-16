@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covid-Checkers</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/axios.js"></script>
 </head>
 <body>
     <header>
@@ -13,6 +14,11 @@
 
     <div id="barra-funcionalidades"> Barra de funcionalidades</div>
     <div id='div-esquerda'>Div-esquerda</div>  
+    <form class="elemento" name="cadastrarNoticia"  action="cadastraNoticia">
+        <input type="url" name="urlNoticia" id="url-noticia" 
+            placeholder="Insta o link para a notícia...">
+        <input type="button" value="Cadastrar">
+    </form>
 
     <div id='feed'>
         <div class='noticia' id='noticia1'> Noticia1</div>
@@ -21,6 +27,23 @@
     </div>
     
     <div id='div-direita'>Div-fireita</div>
+
+    <script>
+       
+       /*Trata a submissão de url de notícia pelo usuário, enviado ao back-end*/
+        const formCadastroNoticia = document.cadastrarNoticia
+    
+        formCadastroNoticia.onsubmit = axios.post(formCadastroNoticia.cadastrarNoticia, 
+             { url: document.formCadastroNoticia.urlNoticia.value }
+             .then(resp => {
+                  const noticia = document.createElement('div')
+                  noticia.innerHTML = resp.conteudoNoticia
+                  noticia.classList.add('noticia')
+                  const feed = document.getElementById('feed')
+                  feed.insertAdjacentElement('afterbegin', noticia)
+              })
+             )
+        </script>
 
 </body>
 </html>
