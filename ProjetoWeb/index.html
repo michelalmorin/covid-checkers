@@ -36,13 +36,17 @@
         formCadastroNoticia.onsubmit = axios.post(formCadastroNoticia.cadastrarNoticia, 
              { url: document.formCadastroNoticia.urlNoticia.value }
              .then(resp => {
-                  const noticia = document.createElement('div')
-                  noticia.innerHTML = resp.conteudoNoticia
-                  noticia.classList.add('noticia')
-                  const feed = document.getElementById('feed')
-                  feed.insertAdjacentElement('afterbegin', noticia)
+                  appendNoticia(resp)
               })
              )
+
+        function appendNoticia(resp){
+            const noticia = document.createElement('div')
+            noticia.innerHTML = resp.conteudoNoticia
+            noticia.classList.add('noticia')
+            const feed = document.getElementById('feed')
+            feed.insertAdjacentElement('afterbegin', noticia)
+        }
         </script>
 
 </body>
