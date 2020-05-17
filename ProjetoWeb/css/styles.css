@@ -2,21 +2,21 @@ body {
     display: grid;
     grid-template-rows: 100px 50px 1fr;
     grid-template-columns: 200px 1fr 200px;
-    grid-template-areas: 
+    grid-template-areas:
         'cabecalho cabecalho cabecalho'
         'funcionalidades funcionalidades funcionalidades'
         'div-esquerda feed div-direita '
     ;
     min-height: 100vh;
     background-color: rgb(238, 241, 241);
-   
+
 }
 
 header {
     grid-area: cabecalho;
     display: flex;
     box-sizing: border-box;
-    border: solid 5px dodgerblue; 
+    border: solid 5px dodgerblue;
     font-family: 'Roboto', sans-serif;
     font-size: 50px;
     color: #F1F1F1;
@@ -34,7 +34,20 @@ div {
     align-items: center;
     justify-content: center;
     font-size: 30px;
-    border: solid 5px dodgerblue 
+    /* border: solid 5px dodgerblue  MARCA BEM OS LIMITES DAS DIVS NÃO DELETAR*/
+}
+
+.formulario {
+    display: flex;
+    box-sizing: border-box;
+    border: solid 1px gray;
+    border-radius: 5px;
+    text-shadow: black 1px 1px 1px;
+}
+
+.formulario input[type=url] {
+    height: 30px;
+    width: 350px;
 }
 
 
@@ -42,22 +55,10 @@ div {
 #barra-funcionalidades {
     grid-area: funcionalidades;
     display: flex;
-    justify-content: flex-start;
-}
-/*
-#espaco-b-busca{
-    flex-direction: row;
-    box-sizing: border-box;
-    border: 0px;
-    flex-basis: 198.44px; 
-    height: inherit;
+    justify-content: center;
+    align-items: flex-end;
 }
 
-#barra-busca{
-    box-sizing: border-box;
-    border:0px;
-}
-*/
 
 
 #div-esquerda {
@@ -72,7 +73,7 @@ div {
     grid-area: feed;
     display: flex;
     flex-direction: column;
-  
+
 }
 
 #feed .noticia {
@@ -82,4 +83,6 @@ div {
     margin-top: 12px;
 
 }
+
+
 
