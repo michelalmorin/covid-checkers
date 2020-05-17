@@ -12,5 +12,13 @@ app.use(bodyParser.json())
 /*Testando requisições GET para URL '/teste*/ 
 app.get('/teste', (req, res) => res.send('OK'))
 
+app.post('/cadastrarNoticia', (req, res) => {
+    const urlNoticia = req.query.url
+    const persistiu = true
+    /*Aqui será inclusa a chamada do método que persistirá as notícias*/
+    if (persistiu) res.send({status: true})
+    else res.send({status: false})
+})
+
 /*EXECUTANDO O SERVIDOR*/
 app.listen(8081, () => console.log('Executando...')) 
