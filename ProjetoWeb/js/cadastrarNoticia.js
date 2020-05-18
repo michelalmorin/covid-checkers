@@ -2,7 +2,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     const formCadNot = document.getElementById("barra-funcionalidades")
-    console.log(formCadNot)
 
     formCadNot.onsubmit = e => {
         e.preventDefault()
