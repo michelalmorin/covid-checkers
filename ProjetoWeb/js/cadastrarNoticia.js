@@ -1,20 +1,24 @@
 /*Trata a submissão de url de notícia pelo usuário, enviado ao back-end*/
-const formCadNot = document.getElementById("barra-funcionalidades")
-console.log(formCadNot)
 
-formCadNot.onsubmit = e => {
-    e.preventDefault()
-    const form = e.target
-    const urlNoticia = form.urlNoticia.value
+document.addEventListener("DOMContentLoaded", function () {
+    const formCadNot = document.getElementById("barra-funcionalidades")
+    console.log(formCadNot)
 
-    axios.post(form.cadastrarNoticia,
-    { url: urlNoticia }
-        .then(resp => {
-            if (resp.status == true) appendNoticia(urlNoticia)
-            else appendNoticia("ERRO AO SALVAR NOTICIA NO BANCO DE DADOS")
-        })
-    )
-}
+    formCadNot.onsubmit = e => {
+        e.preventDefault()
+        const form = e.target
+        const urlNoticia = form.urlNoticia.value
+
+        axios.post(form.cadastrarNoticia,
+            { url: urlNoticia }
+                .then(resp => {
+                    if (resp.status == true) appendNoticia(urlNoticia)
+                    else appendNoticia("ERRO AO SALVAR NOTICIA NO BANCO DE DADOS")
+                })
+        )
+    }
+})
+
 
 function appendNoticia(url) {
     const noticia = document.createElement('div')
@@ -25,7 +29,7 @@ function appendNoticia(url) {
     feed.insertAdjacentElement('afterbegin', noticia)
 }
 
-function gerarPreview(url){
-/*CONSTRÓI PREVIEW DA NOTÍCIA*/ 
+function gerarPreview(url) {
+    /*CONSTRÓI PREVIEW DA NOTÍCIA*/
     return "TESTANDO PREVIEW"
 }
