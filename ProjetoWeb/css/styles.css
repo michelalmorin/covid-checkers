@@ -45,13 +45,23 @@ div {
     text-shadow: black 1px 1px 1px;
 }
 
-.formulario input[type=url] {
+.formulario input[type=seach] {
     height: 30px;
     width: 350px;
 }
 
+button {
+    background-color: #7887ab;
+    color: #F1F1F2;
+    border-radius: 5px;
+    /* text-shadow: #020715 1px 1px 1px; */
+    box-shadow: 3px 3px 11px #041533;
+}
 
-
+.botao-cadastra-not {
+    width: 180px;
+    height: 60px;
+}
 #barra-funcionalidades {
     grid-area: funcionalidades;
     display: flex;
@@ -62,7 +72,9 @@ div {
 
 
 #div-esquerda {
-    grid-area: div-esquerda
+    grid-area: div-esquerda;
+    display: flex;
+    align-items: flex-start;
 }
 
 #div-direita {

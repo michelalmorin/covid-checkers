@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault()
         const form = e.target
         const urlNoticia = form.urlNoticia.value
-        console.log(urlNoticia+" URL notícia")
-
-        axios.post(form.cadastrarNoticia,
+        document.getElementById('dialogoURL').close()
+     
+        axios.post('/cadastrarNoticia',
             { url: urlNoticia })
                 .then(resp => {
                     console.log("REsposta")
