@@ -94,6 +94,7 @@ button {
 
 #feed .noticia {
     border: solid 5px rgb(78, 76, 76);
+    border-radius: 4px;
     width: 90%;
     height: 200px;
     margin-top: 12px;
