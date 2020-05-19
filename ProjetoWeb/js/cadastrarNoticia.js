@@ -1,20 +1,27 @@
 /*Trata a submissão de url de notícia pelo usuário, enviado ao back-end*/
 
 document.addEventListener("DOMContentLoaded", function () {
-    const formCadNot = document.getElementById("barra-funcionalidades")
+    const formCadNot = document.getElementById("formCadNoticia")
+    console.log(formCadNot)
+
+    axios.get('/teste').then(resp => {
+        console.log(resp)
+    })
 
     formCadNot.onsubmit = e => {
         e.preventDefault()
         const form = e.target
         const urlNoticia = form.urlNoticia.value
+        console.log(urlNoticia+" URL notícia")
 
         axios.post(form.cadastrarNoticia,
-            { url: urlNoticia }
+            { url: urlNoticia })
                 .then(resp => {
+                    console.log("REsposta")
                     if (resp.status == true) appendNoticia(urlNoticia)
                     else appendNoticia("ERRO AO SALVAR NOTICIA NO BANCO DE DADOS")
                 })
-        )
+        
     }
 })
 

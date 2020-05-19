@@ -13,13 +13,20 @@
         Covid-Checkers
     </header>
 
-    <div id='div-esquerda'>Div-esquerda</div>  
+    <div id='div-esquerda'>
+        <dialog open>
+            <form method="dialog" id="formCadNoticia" action="cadastrarNoticia">
+                <input type="url" name="urlNoticia" placeholder="Insira aqui o link...">
+                <input type="submit" value="Confirmar">
+            </form>
+        </dialog>
+    </div>  
+
     <div id="barra-funcionalidades">
-        <form class="formulario" id="cadastrar-noticia" action="cadastraNoticia"></form>
-           <input type="url" name="urlNoticia" id="url-noticia" 
-               placeholder="Insira o link para a notícia...">
-         <input type="button" value="Cadastrar">
-        </form>
+        <!-- <form class="formulario" id="buscar-noticia" action="buscarNoticia"></form>
+         COLOCAR AQUI A BUSCA POR NOTÍCIA
+         <input type="button" value="Cadastrar"> -->
+        <!-- </form> -->
     </div>
 
     <div id='feed'>
@@ -28,7 +35,9 @@
         <div class="noticia" id="noticia3"> Noticia3</div>
     </div>
     
-    <div id='div-direita'>Div-fireita</div>
+    <div id='div-direita'>
+        <button id="cadastrar-noticia"></button>
+    </div>
 
     <script>
         // const formee = document.getElementById("cadastrar-noticia")

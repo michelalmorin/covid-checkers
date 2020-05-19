@@ -14,10 +14,15 @@ app.get('/teste', (req, res) => res.send('OK'))
 
 app.post('/cadastrarNoticia', (req, res) => {
     const urlNoticia = req.query.url
+    console.log(req.query.url+"aaaa")
     const persistiu = true
     /*Aqui será inclusa a chamada do método que persistirá as notícias*/
-    if (persistiu) res.send({status: true})
-    else res.send({status: false})
+    if (persistiu) {
+        res.send({...req.body, status: true})
+    }
+    else{
+        res.send({status: false})
+    } 
 })
 
 /*EXECUTANDO O SERVIDOR*/
