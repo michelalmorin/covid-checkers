@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser')
 const express = require('express')
+const request = require('request')
 
 const app = express()
 
@@ -13,8 +14,7 @@ app.use(bodyParser.json())
 app.get('/teste', (req, res) => res.send('OK'))
 
 app.post('/cadastrarNoticia', (req, res) => {
-   /* const urlNoticia = req.query.url
-    console.log(req.query.url+"aaaa")
+    const urlNoticia = req.body
     const persistiu = true
     /*Aqui será inclusa a chamada do método que persistirá as notícias
     if (persistiu) {
@@ -25,6 +25,13 @@ app.post('/cadastrarNoticia', (req, res) => {
     } */
     res.send({status: true})
 })
+
+app.get('/geradorPreview', (req, res) =>{
+    request('http://www.google.com', function (error, response, body) {
+        res.send({ret: body})
+     })
+})
+
 
 /*EXECUTANDO O SERVIDOR*/
 app.listen(8081, () => console.log('Executando...')) 
