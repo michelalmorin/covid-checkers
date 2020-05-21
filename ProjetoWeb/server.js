@@ -27,7 +27,7 @@ app.post('/cadastrarNoticia', (req, res) => {
 })
 
 app.get('/geradorPreview', (req, res) =>{
-    request('http://www.google.com', function (error, response, body) {
+    request(req.query.endereco, function (error, response, body) {
         res.send({ret: body})
      })
 })

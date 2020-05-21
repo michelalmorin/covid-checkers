@@ -51,6 +51,7 @@ div {
     width: 350px;
 }
 
+
 button {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #071128;
@@ -93,6 +94,11 @@ button {
 }
 
 #feed .noticia {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start; 
+    align-content: flex-start;
+    padding: 10px;
     border: solid 5px rgb(78, 76, 76);
     border-radius: 4px;
     width: 90%;
@@ -101,5 +107,26 @@ button {
 
 }
 
+.noticia label {
+    /* border: solid 5px dodgerblue; */
+    align-self: flex-start; 
+    font-weight: bold;
+    font-size: 18px;
+}
 
+/*Descrição*/
+.noticia div {
+    /* border: solid 5px dodgerblue; */
+    align-self: flex-start;
+    justify-self: start;
+    max-width: 70%;
+    font-size: 14px;
+}
 
+.noticia img {
+    /* border: solid 5px dodgerblue; */
+    align-self: flex-start;
+    max-width: 20%;
+    height: 80%;
+
+}
