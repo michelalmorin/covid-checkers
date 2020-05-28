@@ -8,6 +8,7 @@
     <script src="js/axios.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/cadastrarNoticia.js"></script>
+    <script src="js/buscarNoticia.js"></script>
 </head>
 <body>
     <header>
@@ -20,23 +21,19 @@
         <dialog id="dialogo-URL">
             <form method="dialog" id="form-cad-noticia" action="cadastrarNoticia">
                 <input type="url" name="urlNoticia" placeholder="Insira aqui o link...">
-                <input type="submit" value="Confirmar">
+                <input type="submit" value="CCONFIRMAR">
             </form>
         </dialog>
     </div>  
 
     <div id="barra-funcionalidades">
          <form class="formulario" id="buscar-noticia" action="buscarNoticia">
-            <input type="search" id="campo-busca">
-            <input type="button" value="BUSCAR">
+            <input type="search" aria-label="Busca uma notícia" id="campo-busca" required>
+            <input type="submit" value="BUSCAR">
         </form>
     </div>
 
-    <div id='feed'>
-        <div class='noticia' id='noticia1'> Noticia1</div>
-        <div class='noticia' id='noticia2'> Noticia2</div>
-        <div class="noticia" id="noticia3"> Noticia3</div>
-    </div>
+    r
     
     <div id='div-direita'>
         <button id="cadastrar-noticia"></button>
