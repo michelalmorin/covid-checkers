@@ -90,6 +90,8 @@ button {
     grid-area: feed;
     display: flex;
     flex-direction: column;
+    justify-content: start;
+    top: 100px;
 
 }
 
@@ -129,4 +131,9 @@ button {
     max-width: 20%;
     height: 80%;
 
+}
+
+#dialogo-URL {
+  /*ESTÁ DIMINUINDO DE TAMANHA AO CRIAR NOTÍCIA. ARRUMAR*/
+  margin-top: 20px;
 }
