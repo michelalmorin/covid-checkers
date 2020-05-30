@@ -1,23 +1,28 @@
-function configurarBusca(){
-    document.addEventListener("DOMContentLoaded", function(){
-        const formBusca = document.getElementById("form-busca")
-        formBusca.onsubmit(e=>{
+function configurarBusca() {
+    document.addEventListener("DOMContentLoaded", function () {
+        const formBusca = document.busca
+        formBusca.onsubmit = e => {
             e.preventDefault()
-            obtemNoticias(inputDaPesquisa) //COLOCAR AQUI IMPUT DE PESQUISA
+            obtemNoticias(e.target.entrada) //COLOCAR AQUI IMPUT DE PESQUISAs
             /*ESTA FUNÇÃO ESTÁ INCOMPLETA*/
-        })  
+        }
     })
 }
 
-function obtemNoticias(parametro){
-    const noticias = document.querySelectorAll(".noticia")
-    noticias.forEach(noticia => {
-        if(noticia.getAttribute("titulo").includes(parametro)) poeNoResultBusca(noticia)
+function obtemNoticias(inputDaPesquisa) {
+    const noticias = Array.from(document.getElementsByClassName('noticia'))
+    let noticiasFiltradas = []
+    noticiasFiltradas = noticias.filter(noticia => {
+        const titulo = noticia.firstElementChild.textContent
+        console.log(titulo)
+        return titulo.includes(inputDaPesquisa)
     })
+    /*Como inserir as divs resultantes da busca uma por uma?*/ 
+    document.getElementById('feed').innerHTML = noticiasFiltradas.values
 }
 
-function poeNoResultBusca(noticia){
-/*...*/
+function poeNoResultBusca(noticia) {
+    /*...*/
 }
 
 configurarBusca()
