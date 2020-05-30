@@ -3,26 +3,31 @@ function configurarBusca() {
         const formBusca = document.busca
         formBusca.onsubmit = e => {
             e.preventDefault()
-            obtemNoticias(e.target.entrada) //COLOCAR AQUI IMPUT DE PESQUISAs
-            /*ESTA FUNÇÃO ESTÁ INCOMPLETA*/
+            buscaNoticias(e.target.entrada)
         }
     })
 }
 
-function obtemNoticias(inputDaPesquisa) {
+
+function buscaNoticias(inputDaPesquisa) {
     const noticias = Array.from(document.getElementsByClassName('noticia'))
     let noticiasFiltradas = []
     noticiasFiltradas = noticias.filter(noticia => {
         const titulo = noticia.firstElementChild.textContent
-        console.log(titulo)
-        return titulo.includes(inputDaPesquisa)
+        return titulo.includes(inputDaPesquisa.value)
     })
-    /*Como inserir as divs resultantes da busca uma por uma?*/ 
-    document.getElementById('feed').innerHTML = noticiasFiltradas.values
+
+    mostraResultadoBusca(noticiasFiltradas)
 }
 
-function poeNoResultBusca(noticia) {
-    /*...*/
+
+function mostraResultadoBusca(noticiasFiltradas) {
+    const feed = document.getElementById('feed')
+    feed.innerHTML = ''
+    noticiasFiltradas.forEach(noticia => {
+        feed.appendChild(noticia)
+    })
 }
+
 
 configurarBusca()
