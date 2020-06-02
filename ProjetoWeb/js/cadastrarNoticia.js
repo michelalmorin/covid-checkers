@@ -53,7 +53,7 @@ function obtemHTMLNoticia(url, noticia) {
     })
             .then(res => {
                 gerarPreview(res.data.ret, noticia)
-                // console.log("REsultado do GET: " +res.data.ret)
+                //console.log("REsultado do GET: " +res.data.ret)
                 // console.log(typeof res.data.ret)
                 return res.data
             })
@@ -66,11 +66,20 @@ function gerarPreview(html, divDaNoticia){
     const titulo = obtemConteudoMeta(htmlDaNoticia, '[property="og:title"]')
     const descricao = obtemConteudoMeta(htmlDaNoticia, '[property="og:description"]' )
     const imagem = obtemConteudoMeta(htmlDaNoticia, '[property="og:image"]')
+    //const html1 = obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]')
+    //console.log(" HTML: " +html1)
     
+
+    divDaNoticia.onclick = () => {
+       //console.log("DIV CLICAVEL")
+       window.open(obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]'));
+       // document.getElementById("html-externo").show()
+    }
     /*Coloca o conteudo do preview dentro de uma div de notícia*/ 
     appendConteudo(divDaNoticia, titulo, 'label')
     appendConteudo(divDaNoticia, descricao, 'div')
     appendConteudo(divDaNoticia, imagem, 'img')
+ 
 }
 
 function appendConteudo(divMae, conteudo, tipoElemento){
@@ -85,3 +94,5 @@ function obtemConteudoMeta(html, propriedade){
 }
 
 cadastraNoticia()
+
+
