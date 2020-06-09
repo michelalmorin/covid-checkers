@@ -7,17 +7,17 @@ module.exports = {
         /*Seta a conexão default*/
         const uri = 'mongodb://localhost:27017/covid-database'
         mongoose.Promise = global.Promise
-        mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
-        .then(function(){
-            console.log('Conectou!')
+       return mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
+        .then(function(conexao){
+            return conexao
         }).catch(function(err){
             console.log("MONGODB: erro ao conectar", err)
         })
         /*Salva ela numa var*/
-        var conexaoDb = mongoose.connection
+       // var conexaoDb = mongoose.connection
         //Liga a conexão a eventos de erro, pra poder obter os erros de conexão
-         conexaoDb.on('error', console.error.bind(console, 'Erro de conexao MongoDB:'))
-         return conexaoDb
+         //conexaoDb.on('error', console.error.bind(console, 'Erro de conexao MongoDB:'))
+        // return conexaoDb
    },
 
    schemaNoticia(){

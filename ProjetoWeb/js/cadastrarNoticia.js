@@ -7,7 +7,7 @@ function cadastraNoticia() {
         const formCadNot = document.getElementById("form-cad-noticia")
 
         axios.get('/teste').then(resp => {
-            console.log(resp)
+            console.log("testessssss"+resp)
         })
 
         formCadNot.onsubmit = e => {
@@ -19,7 +19,6 @@ function cadastraNoticia() {
             axios.post('/cadastrarNoticia',
                 { url: urlNoticia })
                 .then(resp => {
-                    console.log("REsposta " + resp.status)
                     if (resp.status == 200) appendNoticia(urlNoticia)
                     else appendNoticia("ERRO AO SALVAR NOTICIA NO BANCO DE DADOS")
                 })
@@ -51,21 +50,13 @@ function obtemHTMLNoticia(url, noticia) {
             endereco: url
         }
     })
-<<<<<<< HEAD
         .then(res => {
-            gerarPreview(res.data.ret, noticia)
-            // console.log("REsultado do GET: " +res.data.ret)
-            // console.log(typeof res.data.ret)
+             gerarPreview(res.data.ret, noticia)
             return res.data
         })
-=======
-            .then(res => {
-                gerarPreview(res.data.ret, noticia)
-                //console.log("REsultado do GET: " +res.data.ret)
-                // console.log(typeof res.data.ret)
-                return res.data
-            })
->>>>>>> c6c41e4860589a8eba5f05c2e9d310a12a34cb81
+}
+function teste(){
+        console.log("testando troca trocaaaaaaaaa")
 }
 
 function gerarPreview(html, divDaNoticia) {
@@ -75,25 +66,24 @@ function gerarPreview(html, divDaNoticia) {
     const titulo = obtemConteudoMeta(htmlDaNoticia, '[property="og:title"]')
     const descricao = obtemConteudoMeta(htmlDaNoticia, '[property="og:description"]')
     const imagem = obtemConteudoMeta(htmlDaNoticia, '[property="og:image"]')
-<<<<<<< HEAD
-
-    /*Coloca o conteudo do preview dentro de uma div de notícia*/
-=======
     //const html1 = obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]')
-    //console.log(" HTML: " +html1)
     
-
-    divDaNoticia.onclick = () => {
-       //console.log("DIV CLICAVEL")
-       window.open(obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]'));
-       // document.getElementById("html-externo").show()
-    }
     /*Coloca o conteudo do preview dentro de uma div de notícia*/ 
->>>>>>> c6c41e4860589a8eba5f05c2e9d310a12a34cb81
     appendConteudo(divDaNoticia, titulo, 'label')
     appendConteudo(divDaNoticia, descricao, 'div')
     appendConteudo(divDaNoticia, imagem, 'img')
- 
+
+    tornarClicavel(htmlDaNoticia, divDaNoticia)
+}
+
+function tornarClicavel(htmlDaNoticia, divDaNoticia){
+    divDaNoticia.onmouseover = () => {
+        divDaNoticia.style.cursor = 'pointer'
+    }
+
+    divDaNoticia.onclick = () => {
+        window.open(obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]'));
+     }
 }
 
 function appendConteudo(divMae, conteudo, tipoElemento) {
