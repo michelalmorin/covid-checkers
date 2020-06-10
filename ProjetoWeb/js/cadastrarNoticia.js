@@ -6,25 +6,25 @@ function cadastraNoticia() {
         clicarPraCadastrar()
         const formCadNot = document.getElementById("form-cad-noticia")
 
-        axios.get('/teste').then(resp => {
-            console.log("testessssss"+resp)
-        })
-
+        // axios.get('/teste').then(resp => {
+        //     console.log("testessssss"+resp)
+        // })
         formCadNot.onsubmit = e => {
             e.preventDefault()
             const form = e.target
             const urlNoticia = form.urlNoticia.value
             document.getElementById('dialogo-URL').close()
-
-            axios.post('/cadastrarNoticia',
-                { url: urlNoticia })
-                .then(resp => {
-                    if (resp.status == 200) appendNoticia(urlNoticia)
-                    else appendNoticia("ERRO AO SALVAR NOTICIA NO BANCO DE DADOS")
-                })
-
+            postNoticia(urlNoticia)
         }
     })
+}
+function postNoticia(urlNoticia) {
+    axios.post('/cadastrarNoticia',
+        { url: urlNoticia })
+        .then(resp => {
+            if (resp.status == 200) appendNoticia(urlNoticia)
+            else appendNoticia("ERRO AO SALVAR NOTICIA NO BANCO DE DADOS")
+        })
 }
 
 function clicarPraCadastrar() {
@@ -51,13 +51,11 @@ function obtemHTMLNoticia(url, noticia) {
         }
     })
         .then(res => {
-             gerarPreview(res.data.ret, noticia)
+            gerarPreview(res.data.ret, noticia)
             return res.data
         })
 }
-function teste(){
-        console.log("testando troca trocaaaaaaaaa")
-}
+
 
 function gerarPreview(html, divDaNoticia) {
     const htmlDaNoticia = document.getElementById("html-externo")
@@ -67,8 +65,8 @@ function gerarPreview(html, divDaNoticia) {
     const descricao = obtemConteudoMeta(htmlDaNoticia, '[property="og:description"]')
     const imagem = obtemConteudoMeta(htmlDaNoticia, '[property="og:image"]')
     //const html1 = obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]')
-    
-    /*Coloca o conteudo do preview dentro de uma div de notícia*/ 
+
+    /*Coloca o conteudo do preview dentro de uma div de notícia*/
     appendConteudo(divDaNoticia, titulo, 'label')
     appendConteudo(divDaNoticia, descricao, 'div')
     appendConteudo(divDaNoticia, imagem, 'img')
@@ -76,15 +74,17 @@ function gerarPreview(html, divDaNoticia) {
     tornarClicavel(htmlDaNoticia, divDaNoticia)
 }
 
-function tornarClicavel(htmlDaNoticia, divDaNoticia){
+
+function tornarClicavel(htmlDaNoticia, divDaNoticia) {
     divDaNoticia.onmouseover = () => {
         divDaNoticia.style.cursor = 'pointer'
     }
 
     divDaNoticia.onclick = () => {
         window.open(obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]'));
-     }
+    }
 }
+
 
 function appendConteudo(divMae, conteudo, tipoElemento) {
     const elemento = document.createElement(tipoElemento)
@@ -92,6 +92,7 @@ function appendConteudo(divMae, conteudo, tipoElemento) {
     else elemento.innerHTML = conteudo
     divMae.appendChild(elemento)
 }
+
 
 function obtemConteudoMeta(html, propriedade) {
     return html.querySelector(propriedade).getAttribute('content')

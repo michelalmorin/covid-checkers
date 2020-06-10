@@ -14,13 +14,14 @@ app.use(bodyParser.json())
 
 const conexao = BancoDeDados.conectaDb()
 conexao.then(() => {
-    const modelNoticias = BancoDeDados.modelNoticia()
+    const modelNoticias =BancoDeDados.modelNoticia()
+    modelNoticias.create({url: "https://noticias.uol.com.br/ultimas-noticias/afp/2020/06/09/peru-supera-os-200000-casos-de-covid-19-com-hospitais-quase-saturados.htm"})
    // Inicializador.inicializar()
-    defineGetEPost()
+    defineGetEPost(modelNoticias)
     app.listen(8081, () => console.log('Executando...'))
 })
 
-function defineGetEPost() {
+function defineGetEPost(modelNoticias) {
     /*Testando requisições GET para URL '/teste*/
     app.get('/teste', (req, res) => res.send('OK'))
 
@@ -44,9 +45,11 @@ function defineGetEPost() {
     })
 
     app.get('/inicializar', (req, res) => {
+        //console.log("ModelNoticias"+modelNoticias)
         modelNoticias.find().then(resultado => {
             res.send(resultado)
          })
+   
     })
 }
 

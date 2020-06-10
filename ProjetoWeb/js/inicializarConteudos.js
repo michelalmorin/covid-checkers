@@ -7,13 +7,19 @@ function inicializar(bancoDeDados){
 function buscarNoticiasNoBd(){
     axios.get('/inicializar')
     .then(resp => {
-        console.log(resp)
+        popularFeed(resp.data)
+        console.log(resp.data)
         }).catch(error => {
-            console.log("ERRO AO CARREGAR NOTICIAS", error)
+            console.log("ERRO AO CARREGAR NOTICIAS: ", error)
         })
       
 }
 
+function popularFeed(noticias){
+    noticias.forEach(noticia => {
+        postNoticia(noticia.url)
+    })
+}
 // document.addEventListener('load', () =>{
 //     console.log('testeu')
 //     teste()
