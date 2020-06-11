@@ -51,6 +51,12 @@ div {
     width: 350px;
 }
 
+.formulario input[type=submit] {
+    height: 30px;
+    width: 73px;
+    font-size: 12px;
+}
+
 
 button {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -96,12 +102,15 @@ button {
 }
 
 #feed .noticia {
+  
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    justify-content: start; 
-    align-content: flex-start;
+    justify-content: flex-start;
+    align-content: space-between;
     padding: 10px;
     border: solid 5px rgb(78, 76, 76);
+    /* border: solid 5px red; */
     border-radius: 4px;
     width: 90%;
     height: 200px;
@@ -111,7 +120,9 @@ button {
 
 .noticia label {
     /* border: solid 5px dodgerblue; */
+    max-width: 75%;
     align-self: flex-start; 
+    text-align: justify;
     font-weight: bold;
     font-size: 18px;
 }
@@ -121,7 +132,9 @@ button {
     /* border: solid 5px dodgerblue; */
     align-self: flex-start;
     justify-self: start;
-    max-width: 70%;
+    margin-top: 6px;
+    width: 70%;
+    height: 40%;
     font-size: 14px;
 }
 
@@ -129,7 +142,7 @@ button {
     /* border: solid 5px dodgerblue; */
     align-self: flex-start;
     max-width: 20%;
-    height: 80%;
+    height: 80%;  /*ARRUMAR PRA SER PORCENTAGEM DO FLEX INTEIRO*/
 
 }
 

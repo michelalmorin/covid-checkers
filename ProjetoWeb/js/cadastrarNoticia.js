@@ -5,7 +5,6 @@ function cadastraNoticia() {
     document.addEventListener("DOMContentLoaded", function () {
         clicarPraCadastrar()
         const formCadNot = document.getElementById("form-cad-noticia")
-
         // axios.get('/teste').then(resp => {
         //     console.log("testessssss"+resp)
         // })
@@ -18,6 +17,8 @@ function cadastraNoticia() {
         }
     })
 }
+
+
 function postNoticia(urlNoticia) {
     axios.post('/cadastrarNoticia',
         { url: urlNoticia })
@@ -70,6 +71,8 @@ function gerarPreview(html, divDaNoticia) {
     appendConteudo(divDaNoticia, titulo, 'label')
     appendConteudo(divDaNoticia, descricao, 'div')
     appendConteudo(divDaNoticia, imagem, 'img')
+   
+    
 
     tornarClicavel(htmlDaNoticia, divDaNoticia)
 }
