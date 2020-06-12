@@ -28,6 +28,10 @@ function postNoticia(urlNoticia) {
         })
 }
 
+function postaEPersisteNoticia(urlNoticia){
+    
+}
+
 function clicarPraCadastrar() {
     const botao = document.getElementById('button-cadastrar-news')
     botao.onclick = () => {

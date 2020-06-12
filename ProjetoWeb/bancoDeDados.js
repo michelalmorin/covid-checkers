@@ -45,6 +45,7 @@ module.exports = {
         const arg  = /.*valor.*/
          const query =  model.find({atributo: arg})
          console.log(query)
+         return query
     },
 
     buscarNoBdPorValor(model, atributo, valor){
