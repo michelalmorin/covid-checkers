@@ -25,18 +25,32 @@ function defineGetEPost(modelNoticias) {
     /*Testando requisições GET para URL '/teste*/
     app.get('/teste', (req, res) => res.send('OK'))
 
-    app.post('/cadastrarNoticia', (req, res) => {
+    app.post('/postarNoticia', (req, res) => {
         const urlNoticia = req.body
-        const persistiu = true
-        /*Aqui será inclusa a chamada do método que persistirá as notícias
-        if (persistiu) {
-            res.send({...req.body, status: true})
-        }
-        else{
-            res.send({status: false})
-        } */
-        res.send({ status: true })
+        modelNoticias.findOne({url: urlNoticia}, (err, result) => {
+            if(result == null){
+                const objetoNoticia = {url: urlNoticia}
+                modelNoticias.create(objetoNoticia, (err, objetoCriado) =>{
+                   if(err) return handleError(err)
+                   else{
+                     console.log("Objeto criado "+objetoCriado)
+                     res.send({ status: true })
+                   } 
+                })
+            }
+        })
     })
+
+    // app.post('/cadastrarNoticia', (req, res) => {
+    //     const url = req.body
+    //     request(req.query.endereco, function (error, response, body) {
+    //         obtemInfoNoticia(body)
+    //     })
+    // })
+
+    // function obtemInfoNoticia(body){
+
+    // }
 
     app.get('/geradorPreview', (req, res) => {
         request(req.query.endereco, function (error, response, body) {
@@ -52,7 +66,7 @@ function defineGetEPost(modelNoticias) {
     })
 
     app.get('/buscar', (req, res) => {
-       const noticias =  BancoDeDados.buscaNoBdPorValorContido(modelNoticias, 'titulo', req.query.chaveDebusca)
+       const noticias =  BancoDeDados.buscaNoBdPorValorContido(modelNoticias, 'url', req.query.chaveDebusca)
        res.send(noticias)
     })
 }
