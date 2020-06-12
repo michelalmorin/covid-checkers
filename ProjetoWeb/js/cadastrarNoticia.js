@@ -5,9 +5,7 @@ function cadastraNoticia() {
     document.addEventListener("DOMContentLoaded", function () {
         clicarPraCadastrar()
         const formCadNot = document.getElementById("form-cad-noticia")
-        // axios.get('/teste').then(resp => {
-        //     console.log("testessssss"+resp)
-        // })
+
         formCadNot.onsubmit = e => {
             e.preventDefault()
             const form = e.target
@@ -20,7 +18,7 @@ function cadastraNoticia() {
 
 
 function postNoticia(urlNoticia) {
-    axios.post('/cadastrarNoticia',
+    axios.post('/postarNoticia',
         { url: urlNoticia })
         .then(resp => {
             if (resp.status == 200) appendNoticia(urlNoticia)
@@ -28,9 +26,6 @@ function postNoticia(urlNoticia) {
         })
 }
 
-function postaEPersisteNoticia(urlNoticia){
-    
-}
 
 function clicarPraCadastrar() {
     const botao = document.getElementById('button-cadastrar-news')
@@ -70,14 +65,12 @@ function gerarPreview(html, divDaNoticia) {
     const descricao = obtemConteudoMeta(htmlDaNoticia, '[property="og:description"]')
     const imagem = obtemConteudoMeta(htmlDaNoticia, '[property="og:image"]')
     //const html1 = obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]')
+    const noticia = {"titulo":titulo, "descricao":descricao, "imagem":imagem}
 
     /*Coloca o conteudo do preview dentro de uma div de notícia*/
     appendConteudo(divDaNoticia, titulo, 'label')
     appendConteudo(divDaNoticia, descricao, 'div')
     appendConteudo(divDaNoticia, imagem, 'img')
-   
-    
-
     tornarClicavel(htmlDaNoticia, divDaNoticia)
 }
 
