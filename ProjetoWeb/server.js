@@ -30,11 +30,11 @@ function defineGetEPost(modelNoticias) {
         modelNoticias.findOne({url: urlNoticia}, (err, result) => {
             if(result == null){
                 const objetoNoticia = {url: urlNoticia}
-                modelNoticias.create(objetoNoticia, (err, objetoCriado) =>{
-                   if(err) return handleError(err)
+                modelNoticias.create(urlNoticia, (err, urlNoticia) =>{
+                   if(err) console.log(err)
                    else{
-                     console.log("Objeto criado "+objetoCriado)
-                     res.send({ status: true })
+                    inicializar(res)
+                     console.log("Objeto criado "+urlNoticia)
                    } 
                 })
             }
@@ -53,17 +53,21 @@ function defineGetEPost(modelNoticias) {
     // }
 
     app.get('/geradorPreview', (req, res) => {
+        console.log("URL NO GERADOR PREVIEW?  "+req.query.endereco)
         request(req.query.endereco, function (error, response, body) {
             res.send({ ret: body })
         })
     })
 
     app.get('/inicializar', (req, res) => {
-        //console.log("ModelNoticias"+modelNoticias)
+        inicializar(res)
+    })
+    function inicializar(res){
         modelNoticias.find().then(resultado => {
             res.send(resultado)
          })
-    })
+    }
+
 
     app.get('/buscar', (req, res) => {
        const noticias =  BancoDeDados.buscaNoBdPorValorContido(modelNoticias, 'url', req.query.chaveDebusca)

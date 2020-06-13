@@ -22,11 +22,10 @@ module.exports = {
 
    schemaNoticia(){
        return new mongoose.Schema({
-            url: {
-            type: String,
-            required: true
-            }
-        })
+            url: String
+        },
+        {typeKey: '$type'}
+        )
     },
 
     modelNoticia(){

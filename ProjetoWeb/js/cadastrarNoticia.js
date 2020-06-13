@@ -30,7 +30,7 @@ function postNoticia(urlNoticia) {
 function clicarPraCadastrar() {
     const botao = document.getElementById('button-cadastrar-news')
     botao.onclick = () => {
-        document.getElementById('dialogo-URL').show()
+        document.getElementById('dialogo-URL').showModal()
     }
 }
 
@@ -64,8 +64,6 @@ function gerarPreview(html, divDaNoticia) {
     const titulo = obtemConteudoMeta(htmlDaNoticia, '[property="og:title"]')
     const descricao = obtemConteudoMeta(htmlDaNoticia, '[property="og:description"]')
     const imagem = obtemConteudoMeta(htmlDaNoticia, '[property="og:image"]')
-    //const html1 = obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]')
-    const noticia = {"titulo":titulo, "descricao":descricao, "imagem":imagem}
 
     /*Coloca o conteudo do preview dentro de uma div de notícia*/
     appendConteudo(divDaNoticia, titulo, 'label')
