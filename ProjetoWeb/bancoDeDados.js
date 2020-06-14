@@ -40,11 +40,16 @@ module.exports = {
         })
     },
 
-    buscarNoBdPorValorContido(model, atributo, valor){
-        const arg  = /.*valor.*/
-         const query =  model.find({atributo: arg})
-         console.log(query)
-         return query
+    async buscarNoBdPorValorContido(model, atributo, valor){
+        var valores = valor.split(` `)
+        var documentos = valores.map(value => {
+            const query = model.find({url: {'$in': [new RegExp(`.*${value}.*`, 'i')]}})
+            return query.exec() // não precisa utilizar await aqui, não terá nenhum efeito prático
+        })
+        var resultados = await Promise.all(documentos)
+        console.log(resultados)
+        return resultados  
+       
     },
 
     buscarNoBdPorValor(model, atributo, valor){

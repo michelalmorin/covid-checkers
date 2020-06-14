@@ -41,19 +41,7 @@ function defineGetEPost(modelNoticias) {
         })
     })
 
-    // app.post('/cadastrarNoticia', (req, res) => {
-    //     const url = req.body
-    //     request(req.query.endereco, function (error, response, body) {
-    //         obtemInfoNoticia(body)
-    //     })
-    // })
-
-    // function obtemInfoNoticia(body){
-
-    // }
-
     app.get('/geradorPreview', (req, res) => {
-        console.log("URL NO GERADOR PREVIEW?  "+req.query.endereco)
         request(req.query.endereco, function (error, response, body) {
             res.send({ ret: body })
         })
@@ -69,9 +57,12 @@ function defineGetEPost(modelNoticias) {
     }
 
 
-    app.get('/buscar', (req, res) => {
-       const noticias =  BancoDeDados.buscaNoBdPorValorContido(modelNoticias, 'url', req.query.chaveDebusca)
-       res.send(noticias)
+    app.get('/buscar',  (req, res) => {
+        console.log('Chave de busca no axios', req.query.chaveDeBusca)
+        BancoDeDados.buscarNoBdPorValorContido(modelNoticias, 'url', req.query.chaveDeBusca)
+        .then((resultado)=> {
+            res.send(resultado)
+        })
     })
 }
 

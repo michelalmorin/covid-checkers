@@ -12,17 +12,20 @@ function cadastraNoticia() {
             const urlNoticia = form.urlNoticia.value
             document.getElementById('dialogo-URL').close()
             postNoticia(urlNoticia)
+         
         }
     })
 }
 
 
-function postNoticia(urlNoticia) {
+function postNoticia(urlNoticia, titu) {
     axios.post('/postarNoticia',
-        { url: urlNoticia })
+        { url: urlNoticia})
         .then(resp => {
-            if (resp.status == 200) appendNoticia(urlNoticia)
-            else appendNoticia("ERRO AO SALVAR NOTICIA NO BANCO DE DADOS")
+            console.log("Noticia salva com sucesso")
+            appendNoticia(urlNoticia)
+        }).catch(err => {
+            console.log(err)
         })
 }
 
@@ -51,13 +54,13 @@ function obtemHTMLNoticia(url, noticia) {
         }
     })
         .then(res => {
-            gerarPreview(res.data.ret, noticia)
+            gerarPreview(res.data.ret, noticia, url)
             return res.data
         })
 }
 
 
-function gerarPreview(html, divDaNoticia) {
+function gerarPreview(html, divDaNoticia, url) {
     const htmlDaNoticia = document.getElementById("html-externo")
     /*Preciso colocar o html da noticia dentro do meu html pra adicionar e navegar por ele pela DOM*/
     htmlDaNoticia.innerHTML = html

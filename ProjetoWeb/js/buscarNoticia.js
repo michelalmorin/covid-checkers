@@ -10,36 +10,20 @@ function configurarBusca() {
 
 
 function buscaNoticias(inputDaPesquisa) {
+   
     axios.get('/buscar', {
         params: {
-            chaveDeBusca: inputDaPesquisa
+            chaveDeBusca: inputDaPesquisa.value
         }
     })
     .then(resp => {
+        console.log("Resultado da busca chegando no frotn end"+Object.keys(resp.data))
         popularFeed(resp.data)
         }).catch(error => {
             console.log("ERRO AO CARREGAR RESULTADO DA BUSCA: ", error)
         })
       
-
-    // const noticias = Array.from(document.getElementsByClassName('noticia'))
-    // let noticiasFiltradas = []
-    // noticiasFiltradas = noticias.filter(noticia => {
-    //     const titulo = noticia.firstElementChild.textContent
-    //     return titulo.includes(inputDaPesquisa.value)
-    // })
-
-    // mostraResultadoBusca(noticiasFiltradas)
 }
-
-
-// function mostraResultadoBusca(noticiasFiltradas) {
-//     const feed = document.getElementById('feed')
-//     feed.innerHTML = ''
-//     noticiasFiltradas.forEach(noticia => {
-//         feed.appendChild(noticia)
-//     })
-// }
 
 
 configurarBusca()
