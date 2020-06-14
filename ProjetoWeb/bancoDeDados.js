@@ -47,7 +47,6 @@ module.exports = {
             return query.exec() // não precisa utilizar await aqui, não terá nenhum efeito prático
         })
         var resultados = await Promise.all(documentos)
-        console.log(resultados)
         return resultados  
        
     },

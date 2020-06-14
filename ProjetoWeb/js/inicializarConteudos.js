@@ -15,6 +15,7 @@ function buscarNoticiasNoBd(){
 }
 
 function popularFeed(noticias){
+
     noticias.forEach(noticia => {
         //é feita a colocação dessa forma, enviando para o servidor, para gerar o preview
         appendNoticia(noticia.url)
