@@ -26,5 +26,20 @@ function popularFeed(noticias){
 //     teste()
 // })
 
+function irHome(){
+    document.addEventListener('DOMContentLoaded', function(){
+    
+         const botaoHome = document.getElementById('home')
+         console.log(botaoHome)
+         botaoHome.onclick = function() {
+             console.log("Cliccou no home")
+             buscarNoticiasNoBd()
+         }
+    })
+    
+}
 
+irHome()
 inicializar()
+
+

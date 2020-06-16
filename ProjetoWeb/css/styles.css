@@ -69,10 +69,14 @@ button {
     box-shadow: 3px 3px 11px #041533;
 }
 
-.botao-cadastra-not {
+.botao-esquerda {
     width: 180px;
     height: 60px;
 }
+.botao-esquerda:nth-child(2){
+    margin-top: 15px;
+}
+
 #barra-funcionalidades {
     grid-area: funcionalidades;
     display: flex;
@@ -85,7 +89,8 @@ button {
 #div-esquerda {
     grid-area: div-esquerda;
     display: flex;
-    align-items: flex-start;
+    flex-flow: row wrap;
+    align-content: flex-start;
 }
 
 #div-direita {

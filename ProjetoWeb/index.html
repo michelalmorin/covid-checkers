@@ -17,11 +17,12 @@
     </header>
 
     <div id='div-esquerda'>
-        <button class="botao-cadastra-not" id="button-cadastrar-news">Cadastrar notícia</button>
+        <button class="botao-esquerda" id="home">HOME</button>
+        <button class="botao-esquerda" id="button-cadastrar-news">Cadastrar notícia</button>
         
         <dialog id="dialogo-URL">
             <form method="dialog" id="form-cad-noticia" action="cadastrarNoticia">
-                <input type="url" name="urlNoticia" placeholder="Insira aqui o link..." >
+                <input type="url" name="urlNoticia" placeholder="Insira aqui o link..." required>
                 <input type="submit" value="CONFIRMAR">
             </form>
         </dialog>
@@ -31,7 +32,7 @@
    
     <div id="barra-funcionalidades">
          <form class="formulario" id="form-busca" name="busca">
-            <input type="search" name="entrada" aria-label="Busca uma notícia" id="campo-busca" required>
+            <input type="search" name="entrada" aria-label="Busca uma notícia" id="campo-busca">
             <input type="submit" value="BUSCAR">
         </form>
     </div>
