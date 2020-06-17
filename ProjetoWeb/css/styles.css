@@ -77,50 +77,9 @@ button {
     margin-top: 15px;
 }
 
-#barra-funcionalidades {
-    grid-area: funcionalidades;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-
-
-#div-esquerda {
-    grid-area: div-esquerda;
-    display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-}
-
-#div-direita {
-    grid-area: div-direita
-}
-
-#feed {
-    grid-area: feed;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    top: 100px;
-
-}
-
-#feed .noticia {
-  
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: space-between;
-    padding: 10px;
-    border: solid 5px rgb(78, 76, 76);
-    /* border: solid 5px red; */
-    border-radius: 4px;
-    width: 90%;
-    height: 200px;
-    margin-top: 12px;
-
+.botao-direita {
+    width: 120px;
+    height: 30px;
 }
 
 .noticia label {
@@ -151,7 +110,94 @@ button {
 
 }
 
+
+#barra-funcionalidades {
+    grid-area: funcionalidades;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+
+
+#div-esquerda {
+    grid-area: div-esquerda;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+
+#div-direita {
+    grid-area: div-direita;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+
+#feed {
+    grid-area: feed;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    top: 100px;
+
+}
+
+
+#feed .noticia {
+  
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: space-between;
+    padding: 10px;
+    border: solid 5px rgb(78, 76, 76);
+    /* border: solid 5px red; */
+    border-radius: 4px;
+    width: 90%;
+    height: 200px;
+    margin-top: 12px;
+
+}
+/* #form-cad-usuario {
+    grid-area: cad-usuario;
+    position: absolute;
+    top: 120px;
+    left: 200px;
+    display: block;
+    z-index: 100;
+} */
+
+
+
+#login {
+    margin-bottom: 15px;
+}
+
 #dialogo-URL {
   /*ESTÁ DIMINUINDO DE TAMANHA AO CRIAR NOTÍCIA. ARRUMAR*/
   margin-top: 20px;
+}
+
+#dialogo-cad-usuario {
+    display: none;
+    position: fixed;
+    top: 160px;
+    align-content: flex-start;
+    background-color: white;
+    width: 400px;
+    height: 400px
+}
+#dialogo-cad-usuario form {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+   
+}
+
+#form-cad-usuario input[type=radio] {
+    display: inline;
 }

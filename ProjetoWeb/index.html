@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,34 +11,62 @@
     <script src="js/inicializarConteudos.js"></script>
     <script src="js/cadastrarNoticia.js"></script>
     <script src="js/buscarNoticia.js"></script>
+    <script src="js/cadastrarUsuario.js"></script>
 </head>
+
 <body>
     <header>
         Covid-Checkers
     </header>
 
+
     <div id='div-esquerda'>
         <button class="botao-esquerda" id="home">HOME</button>
-        <button class="botao-esquerda" id="button-cadastrar-news">Cadastrar notícia</button>
-        
+        <button class="botao-esquerda" id="button-cadastrar-news">CADASTRAR NOTÍCIA</button>
+
         <dialog id="dialogo-URL">
-            <form method="dialog" id="form-cad-noticia" action="cadastrarNoticia">
+            <form method="dialog" id="form-cad-noticia">
                 <input type="url" name="urlNoticia" placeholder="Insira aqui o link..." required>
                 <input type="submit" value="CONFIRMAR">
             </form>
         </dialog>
     </div>
 
-    <div id="feed"></div>  
-   
+
     <div id="barra-funcionalidades">
-         <form class="formulario" id="form-busca" name="busca">
+        <form class="formulario" id="form-busca" name="busca">
             <input type="search" name="entrada" aria-label="Busca uma notícia" id="campo-busca">
             <input type="submit" value="BUSCAR">
         </form>
+
+
+        <dialog id="dialogo-cad-usuario">
+            <form method="dialog" class="formulario" id="form-cad-usuario">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome" aria-label="Nome">
+                <label for="sobrenome">Sobrenome</label>
+                <input type="text" name="sobrenome" id="sobrenome" aria-label="Sobrenome">
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email" aria-label="E-mail">
+                <label for="data">Data de nascimento</label>
+                <input type="date" name="data-nascimento" id="data" aria-label="Data de Nascimento">
+                <fieldset>
+                    <legend>Gênero </legend>
+                    <input type="radio" name="genero" value="Feminino"> Feminino
+                    <input type="radio" name="genero" value="Masculino"> Masculino
+                    <input type="radio" name="genero" value="Outros"> Outros
+                </fieldset>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </dialog>
+
     </div>
 
+    <div id="feed"></div>
+
     <div id='div-direita'>
+        <button class="botao-direita" id="login">LOGIN</button>
+        <button class="bota-direita" id="cadastrar-se">CADASTRAR-SE</button>
     </div>
 
     <script>
@@ -45,4 +74,5 @@
 
     <div id="html-externo" style="display: none;"></div>
 </body>
+
 </html>

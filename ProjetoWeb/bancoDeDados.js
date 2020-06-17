@@ -28,8 +28,22 @@ module.exports = {
         )
     },
 
+    schemaUsuario(){
+        return new mongoose.Schema({
+            nome: String,
+            sobrenome: String,
+            email: String,
+            dataNascimento: Date,
+            genero: String
+        })
+    },
+
     modelNoticia(){
         return mongoose.model('Noticia', this.schemaNoticia())
+    },
+
+    modelUsuario(){
+        return mongoose.model('Usuario', this.schemaUsuario())
     },
 
     salvarNoBd(model, objeto){

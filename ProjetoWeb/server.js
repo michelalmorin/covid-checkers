@@ -4,6 +4,7 @@ const request = require('request')
 const BancoDeDados = require('./bancoDeDados')
 //const Inicializador = require('./inicializarApp')
 const mongoose = require('mongoose')
+const { modelUsuario } = require('./bancoDeDados')
 
 const app = express()
 /*Servindo todos os arquivos estáticos*/
@@ -15,8 +16,7 @@ app.use(bodyParser.json())
 const conexao = BancoDeDados.conectaDb()
 conexao.then(() => {
     const modelNoticias =BancoDeDados.modelNoticia()
-  //s  modelNoticias.create({url: "https://noticias.uol.com.br/ultimas-noticias/afp/2020/06/09/peru-supera-os-200000-casos-de-covid-19-com-hospitais-quase-saturados.htm"})
-   // Inicializador.inicializar()
+    const modelUsuario = BancoDeDados.modelUsuario()
     defineGetEPost(modelNoticias)
     app.listen(8081, () => console.log('Executando...'))
 })
@@ -36,6 +36,20 @@ function defineGetEPost(modelNoticias) {
                     inicializar(res)
                      console.log("Objeto criado "+urlNoticia)
                    } 
+                })
+            }
+        })
+    })
+
+    app.post('/cadastrarUsuario', (req, res) => {
+        const cadastro = req.body
+        modelUsuario.findOne({nome: cadastro.nome, sobrenome: cadastro.sobrenome}, (err, result) =>{
+            if(result == null){
+                modelUsuario.create(cadastro, (err, urlNoticia) => {
+                    if(err) console.log("Falha ao cadastrar usuário \n"+err)
+                    else{
+                        console.log("Usuário "+cadastro.nome+" "+cadastro.sobrenome+" salvo com sucesso")
+                    }
                 })
             }
         })
@@ -64,6 +78,8 @@ function defineGetEPost(modelNoticias) {
             res.send(resultado)
         })
     })
+
+   
 }
 
 /*EXECUTANDO O SERVIDOR*/
