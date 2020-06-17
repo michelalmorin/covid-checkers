@@ -186,16 +186,17 @@ button {
     display: none;
     position: fixed;
     top: 160px;
-    align-content: flex-start;
+    align-content: center;
+    justify-content: center;
     background-color: white;
     width: 400px;
-    height: 400px
+    height: 400px;
 }
 #dialogo-cad-usuario form {
     display: flex;
+    flex-basis: 300px;
     flex-direction: column;
     background-color: white;
-   
 }
 
 #form-cad-usuario input[type=radio] {

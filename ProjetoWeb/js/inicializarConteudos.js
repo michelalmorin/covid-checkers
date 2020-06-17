@@ -1,5 +1,6 @@
 function inicializar(bancoDeDados){
     document.addEventListener("DOMContentLoaded", function(){
+        inicializarDialogs()
         buscarNoticiasNoBd()
     })
 }
@@ -33,6 +34,14 @@ function irHome(){
     })
     
 }
+
+function inicializarDialogs(){
+    const dialogs = document.querySelectorAll('dialog')
+    Array.from(dialogs).map((d) => {
+      dialogPolyfill.registerDialog(d);
+    })
+}
+
 
 irHome()
 inicializar()
