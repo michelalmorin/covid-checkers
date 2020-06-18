@@ -16,12 +16,12 @@ app.use(bodyParser.json())
 const conexao = BancoDeDados.conectaDb()
 conexao.then(() => {
     const modelNoticias =BancoDeDados.modelNoticia()
-    const modelUsuario = BancoDeDados.modelUsuario()
-    defineGetEPost(modelNoticias)
+    const modelUsuarios = BancoDeDados.modelUsuario()
+    defineGetEPost(modelNoticias, modelUsuarios)
     app.listen(8081, () => console.log('Executando...'))
 })
 
-function defineGetEPost(modelNoticias) {
+function defineGetEPost(modelNoticias, modelUsuarios) {
     /*Testando requisições GET para URL '/teste*/
     app.get('/teste', (req, res) => res.send('OK'))
 
@@ -43,9 +43,11 @@ function defineGetEPost(modelNoticias) {
 
     app.post('/cadastrarUsuario', (req, res) => {
         const cadastro = req.body
-        modelUsuario.findOne({nome: cadastro.nome, sobrenome: cadastro.sobrenome}, (err, result) =>{
+        console.log(cadastro[0])
+        // console.log('CADASTRO DO USUARIO'+ Object.values(cadastro.nome[0]))
+        modelUsuarios.findOne({nome: cadastro.nome, sobrenome: cadastro.sobrenome}, (err, result) =>{
             if(result == null){
-                modelUsuario.create(cadastro, (err, urlNoticia) => {
+                modelUsuarios.create(cadastro, (err, urlNoticia) => {
                     if(err) console.log("Falha ao cadastrar usuário \n"+err)
                     else{
                         console.log("Usuário "+cadastro.nome+" "+cadastro.sobrenome+" salvo com sucesso")

@@ -5,22 +5,37 @@ function cadastrarUsuario(){
 
         formElement.onsubmit = e => {
             e.preventDefault()
-            const user = e.target
-            document.getElementById('dialog-cad-usuario').close()
-            registrarUsuario(user)
+            const formUser = e.target
+            const dialog = document.getElementById('dialogo-cad-usuario')
+            dialog.close()
+            dialog.style.display = 'none'
+            const usuario = new Usuario(formUser.nome.value, 
+                formUser.sobrenome.value, formUser.email.value,
+                formUser.dataDeNascimento.value, formUser.genero.value)
+            registrarUsuario(usuario)
         }
     })
 }
 
+function Usuario(nome, sobrenome, email, dataDeNascimento, genero){
+    this.nome = nome
+    this.sobrenome = sobrenome
+    this.email = email
+    this.dataDeNascimento = dataDeNascimento
+    this.genero = genero
+}
+
 
 function registrarUsuario(user){
+    console.log(user)
     axios.post('/cadastrarUsuario',
     user)
     .then(res => {
         console.log("Usuario cadastrado com sucesso")
         alert("Cadastro efetuado com sucesso")
     }).catch(err => {
-        console.log(err)
+        alert("Falha ao efetuar cadastro")
+        console.log("Falha ao cadastrar usuário"+err)
     })
 }
 
