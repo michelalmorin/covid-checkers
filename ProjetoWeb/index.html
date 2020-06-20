@@ -14,6 +14,7 @@
     <script src="js/buscarNoticia.js"></script>
     <script src="js/cadastrarUsuario.js"></script>
     <script src="js/dialog-polyfill.js"></script>
+    <script src="js/login.js"></script>
 </head>
 
 <body>
@@ -48,17 +49,32 @@
                 <input type="text" name="nome" id="nome" aria-label="Nome">
                 <label for="sobrenome">Sobrenome</label>
                 <input type="text" name="sobrenome" id="sobrenome" aria-label="Sobrenome">
-                <label for="email">E-mail</label>
-                <input type="email" name="email" id="email" aria-label="E-mail">
                 <label for="data">Data de nascimento</label>
                 <input type="date" name="dataDeNascimento" id="data" aria-label="Data de Nascimento">
+
                 <fieldset name="generos">
                     <legend>Gênero </legend>
                     <input type="radio" name="genero" value="Feminino"> Feminino
                     <input type="radio" name="genero" value="Masculino"> Masculino
                     <input type="radio" name="genero" value="Outros"> Outros
                 </fieldset>
+
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email" aria-label="E-mail">
+                <label for="senha">Senha</label>
+                <input type="password" name="senha" id="senha" aria-label="Senha">
+                
                 <button type="submit">Cadastrar</button>
+            </form>
+        </dialog>
+
+        <dialog id="dialogo-login">
+            <form method="dialog" class="formulario" id="form-login">
+                <label for="login">Login</label>
+                <input type="e-mail" name="email" placeholder="Digite seu e-mail" aria-label="Login" required>
+                <label for="senha">Senha</label>
+                <input type="password" name="password" aria-label="Senha" required>
+                <button type="submit">Logar</button>
             </form>
         </dialog>
 

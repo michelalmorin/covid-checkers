@@ -32,9 +32,10 @@ module.exports = {
         return new mongoose.Schema({
             nome: String,
             sobrenome: String,
-            email: String,
             dataNascimento: Date,
-            genero: String
+            genero: String,
+            email: String,
+            senha: String
         })
     },
 

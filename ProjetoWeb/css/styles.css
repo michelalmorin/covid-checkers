@@ -199,6 +199,26 @@ button {
     background-color: white;
 }
 
+#dialogo-login {
+    display: none;
+    position: fixed;
+    top: 160px;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
+    width: 200px;
+    height: 200px;
+}
+
+#dialogo-login form {
+    display: flex;
+    flex-basis: 200px;
+    flex-direction: column;
+    background-color: white;
+}
+
+
+
 #form-cad-usuario input[type=radio] {
     display: inline;
 }

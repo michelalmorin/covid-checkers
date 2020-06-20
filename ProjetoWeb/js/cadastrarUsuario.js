@@ -10,19 +10,20 @@ function cadastrarUsuario(){
             dialog.close()
             dialog.style.display = 'none'
             const usuario = new Usuario(formUser.nome.value, 
-                formUser.sobrenome.value, formUser.email.value,
-                formUser.dataDeNascimento.value, formUser.genero.value)
+                formUser.sobrenome.value, formUser.dataDeNascimento.value,
+                formUser.genero.value, formUser.email.value, formUser.senha.value)
             registrarUsuario(usuario)
         }
     })
 }
 
-function Usuario(nome, sobrenome, email, dataDeNascimento, genero){
+function Usuario(nome, sobrenome, dataDeNascimento, genero, email, senha){
     this.nome = nome
     this.sobrenome = sobrenome
-    this.email = email
     this.dataDeNascimento = dataDeNascimento
     this.genero = genero
+    this.email = email
+    this.senha = senha
 }
 
 
