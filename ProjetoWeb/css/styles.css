@@ -14,7 +14,7 @@ body {
 
 header {
     grid-area: cabecalho;
-    display: flex;
+    /* display: flex; */
     box-sizing: border-box;
     border: solid 5px dodgerblue;
     font-family: 'Roboto', sans-serif;
@@ -27,6 +27,26 @@ header {
     height: 100px;
     justify-content: center;
     align-items: center;
+}
+
+#infoSessao {
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+    height: 20px;
+    width: 300px;
+    color: white;
+    font-weight: 100;
+}
+
+#sair {
+    display: none;
+    margin-right: 3px;
+    
+}
+
+#usuario-logado {
+    margin-right: 10px;
 }
 
 div {

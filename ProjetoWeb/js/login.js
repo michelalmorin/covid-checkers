@@ -24,17 +24,33 @@ function Login(email, senha){
 }
 
 function registrarLogin(login){
-    console.log(login)
     axios.post('/login',
     login)
     .then(res => {
-        
-        console.log("Retorno do server"+Object.values(res.data))
-        alert("Usuario logado com sucesso")
+        console.log("res.data.validou"+res.data)
+        if(res.data.validou == true){
+            sessionStorage.clear()
+            sessionStorage.setItem('usuarioLogado', login.email)
+            mostraLogado(res.data.nome, res.data.sobrenome)
+            alert("Usuario logado com sucesso")
+        }else {
+            alert("Senha incorreta")
+        }
     }).catch(err => {
         alert("Falha ao logar usuario")
         console.log("Falha logar usuario"+err)
     })
+}
+
+function mostraLogado(nome, sobrenome) {
+    const nomeCompleto = nome.concat(' ', sobrenome)
+    const infoSessao = document.getElementById('infoSessao')
+    const usuarioLogado = document.createElement('p')
+    usuarioLogado.innerHTML = nomeCompleto
+    usuarioLogado.setAttribute('id', 'usuario-logado')
+    const sair = document.getElementById("sair")
+    infoSessao.insertBefore(usuarioLogado, sair)
+    sair.style.display = 'block'
 }
 
 function ativarBotaoLogin(){
@@ -43,6 +59,10 @@ function ativarBotaoLogin(){
          const dialog = document.getElementById('dialogo-login')
          dialog.style.display = 'flex'
     }
+}
+
+function sairDaSessao(params) {
+    
 }
 
 logar()

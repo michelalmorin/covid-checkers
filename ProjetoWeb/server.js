@@ -1,24 +1,10 @@
-
-    require('dotenv').config()
-
 const bodyParser = require('body-parser')
 const express = require('express')
 const request = require('request')
 const bcrypt = require('bcrypt')  
-const flash = require('express-flash')
-const session = require('express-session')
-// const LocalStrategy = require('passport-local').Strategy
-// const session = require('express-session')  
-// const MongoStore = require('connect-mongo')(session)
 const BancoDeDados = require('./bancoDeDados')
 const mongoose = require('mongoose')
-const passport = require('passport')  
-const inicializaPassport = require('./passportConfig')
 
-inicializaPassport(
-    passport, 
-    emailParam => { modelUsuarios.findOne({email: emailParam })}
-    )
 
 
 const app = express()
@@ -27,20 +13,6 @@ app.use(express.static('.'))
 /*Decodificação do corpo de requisições*/
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.set('view-engine', 'ejs')
-app.use(flash())
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    //Resalvar a sessão se nada foi mudado?
-    resave: false,
-    //Savar um valor vazio se não há sessão?
-    saveUninitialized: false
-}))
-app.use(passport.initialize())
-//Armazenar variáveis ao longo de toda a sessão
-app.use(passport.session())
-
-
 
 global.conexao = BancoDeDados.conectaDb()
 conexao.then(() => {
@@ -49,67 +21,10 @@ conexao.then(() => {
     defineGetEPost(modelNoticias, modelUsuarios)
     app.listen(8081, () => console.log('Executando...'))
 })
-/*
-require('./auth')(passport)
-app.use(session({  
-  store: new MongoStore({
-    db: 'covid-checkers',
-    url: 'mongodb://localhost:27017/covid-database',
-    ttl: 5 * 60 // = 5 minutos de sessão
-  }),
-  secret: '123',//configure um segredo seu aqui
-  resave: false,
-  saveUninitialized: false
-}))
-app.use(passport.initialize());
-app.use(passport.session())
 
-
-function authenticationMiddleware () {  
-  return function (req, res, next) {
-    if (req.isAuthenticated()) {
-      return next()
-    }
-    res.redirect('/login?fail=true')
-  }
-}
-
-*/
 function defineGetEPost(modelNoticias, modelUsuarios) {
-    /*Testando requisições GET para URL '/teste
-
-    app.get('/login', function(req, res){
-     if(req.query.fail)
-          res.status('400').send('Usuário e/ou senha incorretos!')
-     else
-         res.status('200').send('Usuário e/ou senha corretos!')
-     })
- 
-    app.post('/login',
    
-         passport.authenticate('local', { successRedirect: '/logged', failureRedirect: '/login?fail=true' })
-    )
-    
-    app.get('/logged', authenticationMiddleware (), function(req, res){
-    //   res.render('logged', { email: req.usuario.email });
-        res.send("LOGIN EFETUADO NO EXPRESS")
-    })
-*/
-    app.get('/teste', (req, res) => res.send('OK'))
-
-    // app.post('/login', (req, res) => {
-    //     console.log("IMPRIMINDO O USUARIO NO SERVER "+req.body.email)
-    //     res.send({nome: req.body.email})
-    //     // res.render("login.ejs", {nome: req.body.username})
-    // })
-
-    app.post('/login', passport.authenticate('local',{
-        successRedirect: '/',
-        failureMessage: 'Falha au autenticar usuario',
-        failureFlash: true
-    }
-    ))
-
+  
     app.post('/postarNoticia', (req, res) => {
         const urlNoticia = req.body
         modelNoticias.findOne({url: urlNoticia}, (err, result) => {
@@ -179,6 +94,20 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
             res.send(resultado)
         })
     })
+
+    app.post('/login', async (req, res) => {
+        const senha = req.body.senha
+        const senhaNoBd = await buscarSenha(req.body.email)
+      
+        const testaSenha = await(bcrypt.compare(senha, senhaNoBd.senha))
+        if(testaSenha == true) res.send({nome: senhaNoBd.nome, sobrenome: senhaNoBd.sobrenome, validou: true})
+        else res.send({validou: false})
+    })
+    
+    async function buscarSenha(emailParam){
+        const senha = await modelUsuarios.findOne({email: emailParam}, 'nome sobrenome senha')
+        return senha
+    }
 
    
 }
