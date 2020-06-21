@@ -1,7 +1,12 @@
+
+    require('dotenv').config()
+
 const bodyParser = require('body-parser')
 const express = require('express')
 const request = require('request')
 const bcrypt = require('bcrypt')  
+const flash = require('express-flash')
+const session = require('express-session')
 // const LocalStrategy = require('passport-local').Strategy
 // const session = require('express-session')  
 // const MongoStore = require('connect-mongo')(session)
@@ -10,7 +15,10 @@ const mongoose = require('mongoose')
 const passport = require('passport')  
 const inicializaPassport = require('./passportConfig')
 
-inicializaPassport(passport)
+inicializaPassport(
+    passport, 
+    emailParam => { modelUsuarios.findOne({email: emailParam })}
+    )
 
 
 const app = express()
@@ -20,6 +28,17 @@ app.use(express.static('.'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.set('view-engine', 'ejs')
+app.use(flash())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    //Resalvar a sessão se nada foi mudado?
+    resave: false,
+    //Savar um valor vazio se não há sessão?
+    saveUninitialized: false
+}))
+app.use(passport.initialize())
+//Armazenar variáveis ao longo de toda a sessão
+app.use(passport.session())
 
 
 
@@ -78,11 +97,18 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
 */
     app.get('/teste', (req, res) => res.send('OK'))
 
-    app.post('/login', (req, res) => {
-        console.log("IMPRIMINDO O USUARIO NO SERVER "+req.body.email)
-        res.send({nome: req.body.email})
-        // res.render("login.ejs", {nome: req.body.username})
-    })
+    // app.post('/login', (req, res) => {
+    //     console.log("IMPRIMINDO O USUARIO NO SERVER "+req.body.email)
+    //     res.send({nome: req.body.email})
+    //     // res.render("login.ejs", {nome: req.body.username})
+    // })
+
+    app.post('/login', passport.authenticate('local',{
+        successRedirect: '/',
+        failureMessage: 'Falha au autenticar usuario',
+        failureFlash: true
+    }
+    ))
 
     app.post('/postarNoticia', (req, res) => {
         const urlNoticia = req.body
