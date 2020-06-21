@@ -2,6 +2,7 @@ function inicializar(bancoDeDados){
     document.addEventListener("DOMContentLoaded", function(){
         inicializarDialogs()
         buscarNoticiasNoBd()
+        verificarSessaoAtiva()
     })
 }
 
@@ -42,8 +43,17 @@ function inicializarDialogs(){
     })
 }
 
+function verificarSessaoAtiva(){
+    const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado'))
+    if (usuarioLogado != null){
+        mostraLogado(usuarioLogado._id,
+            usuarioLogado.nome, usuarioLogado.sobrenome)
+    }
+}
+
 
 irHome()
 inicializar()
+
 
 

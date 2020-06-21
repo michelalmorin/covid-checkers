@@ -2,7 +2,7 @@ function logar(){
 
     document.addEventListener('DOMContentLoaded', function(){
         ativarBotaoLogin()
-    
+        sairDaSessao()
         const formElement = document.getElementById('form-login')
     
         formElement.onsubmit = e => {
@@ -30,8 +30,9 @@ function registrarLogin(login){
         console.log("res.data.validou"+res.data)
         if(res.data.validou == true){
             sessionStorage.clear()
-            sessionStorage.setItem('usuarioLogado', login.email)
-            mostraLogado(res.data.nome, res.data.sobrenome)
+            sessionStorage.setItem('usuarioLogado', JSON.stringify(res.data))
+            console.log('Usuario logado '+Object.keys(res.data) )
+            mostraLogado(res.data._id, res.data.nome, res.data.sobrenome)
             alert("Usuario logado com sucesso")
         }else {
             alert("Senha incorreta")
@@ -42,12 +43,15 @@ function registrarLogin(login){
     })
 }
 
-function mostraLogado(nome, sobrenome) {
+function mostraLogado(_id, nome, sobrenome) {
     const nomeCompleto = nome.concat(' ', sobrenome)
     const infoSessao = document.getElementById('infoSessao')
+    infoSessao.setAttribute('idUsuario', _id)
+
     const usuarioLogado = document.createElement('p')
     usuarioLogado.innerHTML = nomeCompleto
     usuarioLogado.setAttribute('id', 'usuario-logado')
+
     const sair = document.getElementById("sair")
     infoSessao.insertBefore(usuarioLogado, sair)
     sair.style.display = 'block'
@@ -61,8 +65,15 @@ function ativarBotaoLogin(){
     }
 }
 
-function sairDaSessao(params) {
-    
+function sairDaSessao() {
+        const botaoSair = document.getElementById('sair')
+        botaoSair.onclick = e => {
+            document.getElementById('usuario-logado').remove()
+            if(sessionStorage.getItem('usuarioLogado') != null){
+                sessionStorage.clear()
+            }
+        }
+
 }
 
 logar()

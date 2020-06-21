@@ -100,7 +100,7 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
         const senhaNoBd = await buscarSenha(req.body.email)
       
         const testaSenha = await(bcrypt.compare(senha, senhaNoBd.senha))
-        if(testaSenha == true) res.send({nome: senhaNoBd.nome, sobrenome: senhaNoBd.sobrenome, validou: true})
+        if(testaSenha == true) res.send({_id: senhaNoBd._id, nome: senhaNoBd.nome, sobrenome: senhaNoBd.sobrenome, validou: true})
         else res.send({validou: false})
     })
     
