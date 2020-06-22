@@ -69,11 +69,16 @@ function sairDaSessao() {
         const botaoSair = document.getElementById('sair')
         botaoSair.onclick = e => {
             document.getElementById('usuario-logado').remove()
-            if(sessionStorage.getItem('usuarioLogado') != null){
+            if(estaLogado()){
                 sessionStorage.clear()
             }
         }
+}
 
+function estaLogado(){
+    if(sessionStorage.getItem('usuarioLogado') != null || sessionStorage.getItem('usuarioLogado') != undefined){
+        return true
+    }else return false
 }
 
 logar()

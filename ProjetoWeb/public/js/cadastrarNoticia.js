@@ -8,11 +8,16 @@ function cadastraNoticia() {
 
         formCadNot.onsubmit = e => {
             e.preventDefault()
-            const form = e.target
-            const urlNoticia = form.urlNoticia.value
-            document.getElementById('dialogo-URL').close()
-            postNoticia(urlNoticia)
-         
+
+            if(estaLogado()){
+                const form = e.target
+                 const urlNoticia = form.urlNoticia.value
+                 ocultarDialog('dialogo-URL')
+                 postNoticia(urlNoticia)
+            }else {
+                alert('Você precisa se logar para postar notícias')
+                ocultarDialog('dialogo-URL')
+            }
         }
     })
 }
@@ -21,7 +26,8 @@ function cadastraNoticia() {
 function postNoticia(urlNoticia, titu) {
     axios.post('/postarNoticia',
         { url: urlNoticia})
-        .then(resp => {
+        .then(res => {
+            console.log(res)
             console.log("Noticia salva com sucesso")
             appendNoticia(urlNoticia)
         }).catch(err => {
@@ -39,14 +45,17 @@ function clicarPraCadastrar() {
 
 
 function appendNoticia(url) {
+
     const noticia = document.createElement('div')
     const conteudoNoticia = obtemHTMLNoticia(url, noticia)
     noticia.classList.add('noticia')
+    //adicionarVotos()
     const feed = document.getElementById('feed')
     feed.insertAdjacentElement('afterbegin', noticia)
 }
 
 function obtemHTMLNoticia(url, noticia) {
+
     var retorno = null
     axios.get('/geradorPreview', {
         params: {
@@ -68,13 +77,41 @@ function gerarPreview(html, divDaNoticia, url) {
     const descricao = obtemConteudoMeta(htmlDaNoticia, '[property="og:description"]')
     const imagem = obtemConteudoMeta(htmlDaNoticia, '[property="og:image"]')
 
+    //AQUI TEM Q TER UM POST PRA BUSCAR E RENDERIZAR PS VOTOS NEGATIVOS
+    divDaNoticia.setAttribute('url', url)
+    const divVotos = acrescentaOsVotos(divDaNoticia)
     /*Coloca o conteudo do preview dentro de uma div de notícia*/
     appendConteudo(divDaNoticia, titulo, 'label')
     appendConteudo(divDaNoticia, descricao, 'div')
+    divDaNoticia.appendChild(divVotos)
     appendConteudo(divDaNoticia, imagem, 'img')
     tornarClicavel(htmlDaNoticia, divDaNoticia)
 }
 
+function acrescentaOsVotos(){
+    const votoPositivo = document.createElement('p')
+    const votoNegativo = document.createElement('p')
+    votoNegativo.innerHTML = 'Verdadeira'
+    votoPositivo.innerHTML = 'Falsa'
+    votoPositivo.classList.add('votoPositivo')
+    votoNegativo.classList.add('votoNegativo')
+
+    const quantVotosPos = document.createElement(p)
+    const quantVotosNeg = document.createElement(p)
+    quantVotosPos.innerHTML = buscaQuantVotos().positivos
+    quantVotosNeg.innerHTML = buscaQuantVotos().negativos
+    quantVotosPos.classList.add('num-votos-pos')
+    quantVotosNeg.classList.add('num-votos-neg')
+
+    divVotos = document.createElement('div')
+    divVotos.setAttribute('id', 'div-votos')
+    divVotos.appendChild(votoPositivo)
+    divVotos.appendChild(quantVotosPos)
+    divVotos.appendChild(votoNegativo)
+    divVotos.appendChild(quantVotosNeg)
+
+    return divVotos
+}
 
 function tornarClicavel(htmlDaNoticia, divDaNoticia) {
     divDaNoticia.onmouseover = () => {

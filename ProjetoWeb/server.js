@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 
 const app = express()
 /*Servindo todos os arquivos estáticos*/
-app.use(express.static('.'))
+app.use(express.static('public'))
 /*Decodificação do corpo de requisições*/
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -26,11 +26,14 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
    
   
     app.post('/postarNoticia', (req, res) => {
-        const urlNoticia = req.body
+        const urlNoticia = req.body.url
         modelNoticias.findOne({url: urlNoticia}, (err, result) => {
             if(result == null){
-                const objetoNoticia = {url: urlNoticia}
-                modelNoticias.create(urlNoticia, (err, urlNoticia) =>{
+                const id = mongoose.Types.ObjectId()
+                console.log(id)
+                console.log('ULT NOTICIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA '+urlNoticia)
+                const objetoNoticia = {_id: id, url: urlNoticia}
+                modelNoticias.create(objetoNoticia, (err, urlNoticia) =>{
                    if(err) console.log(err)
                    else{
                     inicializar(res)
@@ -72,6 +75,7 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
     }
 
     app.get('/geradorPreview', (req, res) => {
+        console.log("URL no gerador preview "+req.query.endereco)
         request(req.query.endereco, function (error, response, body) {
             res.send({ ret: body })
         })

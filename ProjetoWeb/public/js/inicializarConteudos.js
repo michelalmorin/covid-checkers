@@ -51,6 +51,10 @@ function verificarSessaoAtiva(){
     }
 }
 
+function ocultarDialog(id){
+    document.getElementById(id).close()
+}
+
 
 irHome()
 inicializar()
