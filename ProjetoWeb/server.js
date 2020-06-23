@@ -4,6 +4,8 @@ const request = require('request')
 const bcrypt = require('bcrypt')  
 const BancoDeDados = require('./bancoDeDados')
 const mongoose = require('mongoose')
+const { buscarNoBdPorValor } = require('./bancoDeDados')
+const bancoDeDados = require('./bancoDeDados')
 
 
 
@@ -30,14 +32,12 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
         modelNoticias.findOne({url: urlNoticia}, (err, result) => {
             if(result == null){
                 const id = mongoose.Types.ObjectId()
-                console.log(id)
-                console.log('ULT NOTICIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA '+urlNoticia)
-                const objetoNoticia = {_id: id, url: urlNoticia}
+          
+                const objetoNoticia = {_id: id, url: urlNoticia, positivos: 0, negativos:0}
                 modelNoticias.create(objetoNoticia, (err, urlNoticia) =>{
                    if(err) console.log(err)
                    else{
                     inicializar(res)
-                     console.log("Objeto criado "+urlNoticia)
                    } 
                 })
             }
@@ -66,7 +66,7 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
                 modelUsuarios.create(usuario, (err, urlNoticia) => {
                     if(err) console.log("Falha ao cadastrar usuário \n"+err)
                     else{
-                        console.log("Usuário "+usuario.nome+" "+usuario.sobrenome+" salvo com sucesso")
+                       // console.log("Usuário "+usuario.nome+" "+usuario.sobrenome+" salvo com sucesso")
                         res.send(usuario)
                     }
                 })
@@ -75,7 +75,6 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
     }
 
     app.get('/geradorPreview', (req, res) => {
-        console.log("URL no gerador preview "+req.query.endereco)
         request(req.query.endereco, function (error, response, body) {
             res.send({ ret: body })
         })
@@ -92,7 +91,6 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
 
 
     app.get('/buscar',  (req, res) => {
-        console.log('Chave de busca no axios', req.query.chaveDeBusca)
         BancoDeDados.buscarNoBdPorValorContido(modelNoticias, 'url', req.query.chaveDeBusca)
         .then((resultado)=> {
             res.send(resultado)
@@ -108,10 +106,21 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
         else res.send({validou: false})
     })
     
+    app.get('/buscarNoticia', async (req, res) => {
+        const noticia = await BancoDeDados.buscarNoBdPorValor(modelNoticias, 'url', req.body.url)
+        res.send(noticia._doc)
+    })
+
     async function buscarSenha(emailParam){
         const senha = await modelUsuarios.findOne({email: emailParam}, 'nome sobrenome senha')
         return senha
     }
+
+    app.post('/registrarVoto', async (req, res) => {
+        const noticia  = await BancoDeDados.buscarNoBdPorValor(modelNoticias, 'url', req.body.url)
+        console.log(noticia)
+        bancoDeDados.registrarVoto(modelNoticias, noticia, req.body.tipo)
+    })
 
    
 }

@@ -13,16 +13,13 @@ module.exports = {
         }).catch(function(err){
             console.log("MONGODB: erro ao conectar", err)
         })
-        /*Salva ela numa var*/
-       // var conexaoDb = mongoose.connection
-        //Liga a conexão a eventos de erro, pra poder obter os erros de conexão
-         //conexaoDb.on('error', console.error.bind(console, 'Erro de conexao MongoDB:'))
-        // return conexaoDb
    },
 
    schemaNoticia(){
        return new mongoose.Schema({
-            url: String
+            url: String,
+            positivos: Number,
+            negativos: Number
         },
         {typeKey: '$type'}
         )
@@ -66,32 +63,16 @@ module.exports = {
        
     },
 
-    buscarNoBdPorValor(model, atributo, valor){
-         const query =  model.find({atributo: valor})
-         console.log("Objeto query  ", query)
-        //  var promise = query.exec()
-        //  promise.addBack((err, docs) => {
-        //      if(err) console.log("Erro ao realizar busca por valor de atributo", err)
-        //      else console.log(docs)
-        //  })
-        //  return
+    async buscarNoBdPorValor(model, atributo, valor){
+         const query =  await model.findOne({atributo: valor})
+        return query
+    },
 
+    async registrarVoto(modelNoticias, noticia, tipo){
+        let voto = null
+        if(tipo == 'positivos') voto = noticia.positivos
+        else if(tipo == 'negativos') voto = noticia.negativos
+        voto++
+        modelNoticias.findOneAndUpdate({_id: noticia._id}, {tipo: voto} )
     }
 }
-
-
-/*
-/*Cria uma instância de notícia do BD e salva nele
-function salvarNoticia(noticia){
-    var not = new NoticiaModel(noticia)
-    not.save(function(err) {
-        if (err) return handleError(err)
-    })
-}
-
-function buscarNoticias(argumento){
-    const arg  = /.*argumento.
-   const noticia =  NoticiaModel.find({"titulo": arg})
-   console.log(noticia)
-}
-*/

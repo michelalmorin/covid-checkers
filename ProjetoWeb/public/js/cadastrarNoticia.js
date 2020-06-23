@@ -46,6 +46,7 @@ function clicarPraCadastrar() {
 
 function appendNoticia(url) {
 
+    console.log("Inicializar chamou o append, URL: "+url)
     const noticia = document.createElement('div')
     const conteudoNoticia = obtemHTMLNoticia(url, noticia)
     noticia.classList.add('noticia')
@@ -69,7 +70,7 @@ function obtemHTMLNoticia(url, noticia) {
 }
 
 
-function gerarPreview(html, divDaNoticia, url) {
+async function gerarPreview(html, divDaNoticia, url) {
     const htmlDaNoticia = document.getElementById("html-externo")
     /*Preciso colocar o html da noticia dentro do meu html pra adicionar e navegar por ele pela DOM*/
     htmlDaNoticia.innerHTML = html
@@ -79,7 +80,10 @@ function gerarPreview(html, divDaNoticia, url) {
 
     //AQUI TEM Q TER UM POST PRA BUSCAR E RENDERIZAR PS VOTOS NEGATIVOS
     divDaNoticia.setAttribute('url', url)
-    const divVotos = acrescentaOsVotos(divDaNoticia)
+    console.log("URL antes de acrescentar votos: "+url)
+    const divVotos = await acrescentaOsVotos(url)
+    divVotos.classList.add('divVotos')
+    console.log('Div votos' +divVotos)
     /*Coloca o conteudo do preview dentro de uma div de notícia*/
     appendConteudo(divDaNoticia, titulo, 'label')
     appendConteudo(divDaNoticia, descricao, 'div')
@@ -88,29 +92,42 @@ function gerarPreview(html, divDaNoticia, url) {
     tornarClicavel(htmlDaNoticia, divDaNoticia)
 }
 
-function acrescentaOsVotos(){
+async function acrescentaOsVotos(url){
     const votoPositivo = document.createElement('p')
     const votoNegativo = document.createElement('p')
-    votoNegativo.innerHTML = 'Verdadeira'
-    votoPositivo.innerHTML = 'Falsa'
+    votoNegativo.innerHTML = 'Falsa'
+    votoPositivo.innerHTML = 'Verdadeira'
     votoPositivo.classList.add('votoPositivo')
     votoNegativo.classList.add('votoNegativo')
 
-    const quantVotosPos = document.createElement(p)
-    const quantVotosNeg = document.createElement(p)
-    quantVotosPos.innerHTML = buscaQuantVotos().positivos
-    quantVotosNeg.innerHTML = buscaQuantVotos().negativos
+    const quantVotosPos = document.createElement('p')
+    const quantVotosNeg = document.createElement('p')
+    const objetoNoticia = await buscaQuantVotos(url)
+    quantVotosPos.innerHTML = objetoNoticia.positivos
+    quantVotosNeg.innerHTML = objetoNoticia.negativos
     quantVotosPos.classList.add('num-votos-pos')
     quantVotosNeg.classList.add('num-votos-neg')
 
     divVotos = document.createElement('div')
-    divVotos.setAttribute('id', 'div-votos')
     divVotos.appendChild(votoPositivo)
     divVotos.appendChild(quantVotosPos)
     divVotos.appendChild(votoNegativo)
     divVotos.appendChild(quantVotosNeg)
+    
+    votar(votoPositivo, quantVotosPos, votoNegativo, quantVotosNeg, url)
 
     return divVotos
+}
+
+async function buscaQuantVotos(urli){
+    console.log("URL indo pro back-end "+urli)
+  return await axios.get('/buscarNoticia', 
+                 {url: urli}
+                ).then(res => {
+                      return res.data
+                }).catch(err => {
+                    console.log("Erro na requisição de votos ao servidor: "+err)
+                })
 }
 
 function tornarClicavel(htmlDaNoticia, divDaNoticia) {

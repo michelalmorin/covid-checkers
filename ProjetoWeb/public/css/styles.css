@@ -105,10 +105,11 @@ button {
 .noticia label {
     /* border: solid 5px dodgerblue; */
     max-width: 75%;
+    max-height: 30%;
     align-self: flex-start; 
     text-align: justify;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 /*Descrição*/
@@ -118,7 +119,7 @@ button {
     justify-self: start;
     margin-top: 6px;
     width: 70%;
-    height: 40%;
+    height: 30%;
     font-size: 14px;
 }
 
@@ -241,4 +242,40 @@ button {
 
 #form-cad-usuario input[type=radio] {
     display: inline;
+}
+
+.divVotos {
+    /* font-size: 10; */
+    color: white;
+    font-weight: 200;
+    height: 15%;
+    width: 50px;
+}
+
+.votoPositivo{
+    padding: 5px 5px;
+    width: 85px;
+    text-align: center;
+    margin-right: 4px;
+    border-radius: 3px;
+    background-color: green;
+
+}
+
+.votoNegativo{
+    padding: 5px 5px;
+    width: 85px;
+    text-align: center;
+    margin-right: 4px;
+    margin-left: 12px;
+    border-radius: 3px;
+    background-color: red;
+}
+
+.num-votos-pos {
+    color: black;
+}
+
+.num-votos-neg {
+    color: black;
 }
