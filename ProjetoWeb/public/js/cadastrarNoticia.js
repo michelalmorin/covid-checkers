@@ -27,8 +27,6 @@ function postNoticia(urlNoticia, titu) {
     axios.post('/postarNoticia',
         { url: urlNoticia})
         .then(res => {
-            console.log(res)
-            console.log("Noticia salva com sucesso")
             appendNoticia(urlNoticia)
         }).catch(err => {
             console.log(err)
@@ -46,7 +44,6 @@ function clicarPraCadastrar() {
 
 function appendNoticia(url) {
 
-    console.log("Inicializar chamou o append, URL: "+url)
     const noticia = document.createElement('div')
     const conteudoNoticia = obtemHTMLNoticia(url, noticia)
     noticia.classList.add('noticia')
@@ -80,10 +77,9 @@ async function gerarPreview(html, divDaNoticia, url) {
 
     //AQUI TEM Q TER UM POST PRA BUSCAR E RENDERIZAR PS VOTOS NEGATIVOS
     divDaNoticia.setAttribute('url', url)
-    console.log("URL antes de acrescentar votos: "+url)
     const divVotos = await acrescentaOsVotos(url)
     divVotos.classList.add('divVotos')
-    console.log('Div votos' +divVotos)
+
     /*Coloca o conteudo do preview dentro de uma div de notícia*/
     appendConteudo(divDaNoticia, titulo, 'label')
     appendConteudo(divDaNoticia, descricao, 'div')
@@ -92,51 +88,19 @@ async function gerarPreview(html, divDaNoticia, url) {
     tornarClicavel(htmlDaNoticia, divDaNoticia)
 }
 
-async function acrescentaOsVotos(url){
-    const votoPositivo = document.createElement('p')
-    const votoNegativo = document.createElement('p')
-    votoNegativo.innerHTML = 'Falsa'
-    votoPositivo.innerHTML = 'Verdadeira'
-    votoPositivo.classList.add('votoPositivo')
-    votoNegativo.classList.add('votoNegativo')
-
-    const quantVotosPos = document.createElement('p')
-    const quantVotosNeg = document.createElement('p')
-    const objetoNoticia = await buscaQuantVotos(url)
-    quantVotosPos.innerHTML = objetoNoticia.positivos
-    quantVotosNeg.innerHTML = objetoNoticia.negativos
-    quantVotosPos.classList.add('num-votos-pos')
-    quantVotosNeg.classList.add('num-votos-neg')
-
-    divVotos = document.createElement('div')
-    divVotos.appendChild(votoPositivo)
-    divVotos.appendChild(quantVotosPos)
-    divVotos.appendChild(votoNegativo)
-    divVotos.appendChild(quantVotosNeg)
-    
-    votar(votoPositivo, quantVotosPos, votoNegativo, quantVotosNeg, url)
-
-    return divVotos
-}
-
-async function buscaQuantVotos(urli){
-    console.log("URL indo pro back-end "+urli)
-  return await axios.get('/buscarNoticia', 
-                 {url: urli}
-                ).then(res => {
-                      return res.data
-                }).catch(err => {
-                    console.log("Erro na requisição de votos ao servidor: "+err)
-                })
-}
 
 function tornarClicavel(htmlDaNoticia, divDaNoticia) {
-    divDaNoticia.onmouseover = () => {
-        divDaNoticia.style.cursor = 'pointer'
-    }
+    mouseOverEClick(divDaNoticia.children[0], htmlDaNoticia)
+    mouseOverEClick(divDaNoticia.children[1], htmlDaNoticia)
+    mouseOverEClick(divDaNoticia.children[3], htmlDaNoticia)
+}
 
-    divDaNoticia.onclick = () => {
-        window.open(obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]'));
+function mouseOverEClick(elemento, htmlDaNoticia){
+    elemento.onmouseover = () =>{
+        elemento.style.cursor = 'pointer'
+    }
+    elemento.onclick = () => {
+        window.open(obtemConteudoMeta(htmlDaNoticia, '[property="og:url"]'))
     }
 }
 
@@ -152,6 +116,48 @@ function appendConteudo(divMae, conteudo, tipoElemento) {
 function obtemConteudoMeta(html, propriedade) {
     return html.querySelector(propriedade).getAttribute('content')
 }
+
+
+async function acrescentaOsVotos(url){
+    const votoPositivo = document.createElement('p')
+    const votoNegativo = document.createElement('p')
+    votoNegativo.innerHTML = 'Falsa'
+    votoPositivo.innerHTML = 'Verdadeira'
+    votoPositivo.classList.add('votoPositivo')
+    votoNegativo.classList.add('votoNegativo')
+
+    const quantVotosPos = document.createElement('p')
+    const quantVotosNeg = document.createElement('p')
+    var objetoNoticia = await buscaQuantVotos(url)
+    // console.log("cadastrarNoticia 132, objetoNoticia.data "+Object.keys(objetoNoticia.data[0]))
+    objetoNoticia = objetoNoticia.data[0]
+    quantVotosPos.innerHTML = objetoNoticia.positivos
+    quantVotosNeg.innerHTML = objetoNoticia.negativos
+    quantVotosPos.classList.add('num-votos-pos')
+    quantVotosNeg.classList.add('num-votos-neg')
+
+    divVotos = document.createElement('div')
+    divVotos.appendChild(votoPositivo)
+    divVotos.appendChild(quantVotosPos)
+    divVotos.appendChild(votoNegativo)
+    divVotos.appendChild(quantVotosNeg)
+    console.log("Voto positivo antes de chamar o votar: "+votoPositivo)
+
+    votar(votoPositivo, quantVotosPos, votoNegativo, quantVotosNeg, url)
+
+    return divVotos
+}
+
+async function buscaQuantVotos(urli){
+    console.log("busca quant votos "+urli)
+
+     const result = await axios.get('/buscarNoticia', {
+                    params: {
+                     url: urli}
+                    })
+        
+     return result
+ }
 
 cadastraNoticia()
 

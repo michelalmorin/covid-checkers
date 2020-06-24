@@ -107,8 +107,8 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
     })
     
     app.get('/buscarNoticia', async (req, res) => {
-        const noticia = await BancoDeDados.buscarNoBdPorValor(modelNoticias, 'url', req.body.url)
-        res.send(noticia._doc)
+        const noticia = await BancoDeDados.buscarNoticiaPraVotos(modelNoticias, req.query.url)
+        res.send(noticia)
     })
 
     async function buscarSenha(emailParam){
@@ -117,14 +117,11 @@ function defineGetEPost(modelNoticias, modelUsuarios) {
     }
 
     app.post('/registrarVoto', async (req, res) => {
-        const noticia  = await BancoDeDados.buscarNoBdPorValor(modelNoticias, 'url', req.body.url)
-        console.log(noticia)
-        bancoDeDados.registrarVoto(modelNoticias, noticia, req.body.tipo)
+        const noticia  = await BancoDeDados.buscarNoticiaPraVotos(modelNoticias, req.body.url)
+        const notAtualizada = await bancoDeDados.registrarVoto(modelNoticias, noticia[0], req.body.tipo)
+        console.log('notAtualizada '+notAtualizada)
+        res.send(notAtualizada)
     })
 
    
 }
-
-
-
-/*EXECUTANDO O SERVIDOR*/

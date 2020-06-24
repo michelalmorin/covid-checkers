@@ -1,26 +1,31 @@
+
 function votar(votoPositivo, quantVotosPos, votoNegativo, quantVotosNeg, url){
-    document.addEventListener('DOMContentLoaded', ()=>{
-        cliqueVoto(votoPositivo, quantVotosPos, votoNegativo, quantVotosNeg, url)
-    })
+    processarVoto(votoPositivo, 'positivos', quantVotosPos, url)
+    processarVoto(votoNegativo, 'negativos', quantVotosNeg, url)
+
 }
 
-function cliqueVoto(votoPositivo, quantVotosPos, votoNegativo, quantVotosNeg, url){
-    votoPositivo.onclick = (e) =>{
-        e.preventDefault()
-        enviaVotosBd('positivos', quantVotosPos, url)
+
+function processarVoto(elemento, tipo, quantVotos, url){
+    elemento.onmouseover = () => {
+        elemento.style.cursor = 'pointer'
     }
 
-    votoNegativo.onclick = (e) =>{
+    elemento.onclick = (e) => {
+        console.log('Clicou pra votar: '+tipo)
         e.preventDefault()
-        enviaVotosBd('negativos', quantVotosNeg, url)
+        enviaVotosBd(tipo, quantVotos, url)
     }
 }
+
 
 function enviaVotosBd(tipo, quantiaElement, url){
+
     axios.post('/registrarVoto', 
         {tipo: tipo, url: url}
     ).then(res => {
-        renderizarVotos(tipo, res.data, quantiaElement)
+         quantAtualizada = res.data[`${tipo}`]
+        renderizarVotos(tipo, quantAtualizada, quantiaElement)
     }).catch(err => {
         alert('Não foi possível registrar voto1')
         console.log('Não foi possível registrar voto '+err)

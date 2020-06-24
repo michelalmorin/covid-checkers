@@ -31,7 +31,6 @@ function registrarLogin(login){
         if(res.data.validou == true){
             sessionStorage.clear()
             sessionStorage.setItem('usuarioLogado', JSON.stringify(res.data))
-            console.log('Usuario logado '+Object.keys(res.data) )
             mostraLogado(res.data._id, res.data.nome, res.data.sobrenome)
             alert("Usuario logado com sucesso")
         }else {

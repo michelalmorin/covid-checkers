@@ -68,11 +68,25 @@ module.exports = {
         return query
     },
 
+    async buscarNoticiaPraVotos(model, valor){
+        const query =  await model.find({url: valor})
+        return query
+    },
+
     async registrarVoto(modelNoticias, noticia, tipo){
         let voto = null
-        if(tipo == 'positivos') voto = noticia.positivos
-        else if(tipo == 'negativos') voto = noticia.negativos
-        voto++
-        modelNoticias.findOneAndUpdate({_id: noticia._id}, {tipo: voto} )
+        var result = null
+        if(tipo == 'positivos'){
+            voto = noticia.positivos
+            voto++
+            result = await modelNoticias.findOneAndUpdate({_id: noticia._id}, {positivos: voto}, {new: true})
+        } 
+        else if(tipo == 'negativos'){
+            voto = noticia.negativos
+            voto++
+            result = await modelNoticias.findOneAndUpdate({_id: noticia._id}, {negativos: voto}, {new: true})
+        }
+    
+        return result
     }
 }
